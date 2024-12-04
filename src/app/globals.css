@@ -2,22 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background-color: #ededed;
-  --text-color: #000000;
-  --primary-color: rgb(0, 112, 243);
-}
-
-[data-theme="dark"] {
-  --background-color: #19181f;
-  --text-color: #ffffff;
-  --primary-color: #0a74da;
-}
-
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
 }
 
 @layer utilities {
@@ -27,5 +13,19 @@ body {
 }
 
 @layer components {
-  
+  .basic-theme {
+    @apply bg-white dark:bg-gray-900 text-black dark:text-white
+  }
+  .white-theme {
+    @apply bg-white text-black
+  }
+  .center-col {
+    @apply flex flex-col items-center justify-center
+  }
+  .theme-button {
+    @apply border-[1px] border-primary shadow-lg bg-white text-primary dark:text-white dark:bg-primary dark:hover:bg-blue-400 w-[250px] p-1 font-bold hover:bg-blue-400 hover:text-white rounded
+  }
+  .input {
+    @apply border-[2px] border-slate-200 rounded p-1 shadow-md
+  }
 }
