@@ -23,7 +23,7 @@ const Login = () => {
                     <input required className='input w-[70%]' type='password'  {...register("password", { required: true })}/>
                     <button type='submit' className='theme-button w-[70%]'>Login</button>
                 </form>
-                <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>Don't have an account? Signup!</Link>
+                <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>Do not have an account? Signup!</Link>
             </div>
         </div>
     )
