@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export const registerUser = async (user) => {
+export const registerUser = async (form) => {
     try { 
-        const response = await axios.post("/api/user/register", user, { headers: { "Content-Type": "application/json" } })
+        const response = await axios.post("/api/user/signup", form, { headers: { "Content-Type": "application/json" } })
         return response;
     } catch (error) {
-        return { error: true, msg: error }
+        return error;
     }
 }
