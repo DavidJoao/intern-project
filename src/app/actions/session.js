@@ -1,5 +1,5 @@
 "use server"
-import { signIn, signOut, auth } from "../auth";
+import { signIn, signOut, auth } from "../lib/auth"
 import { AuthError } from "next-auth";
 
 export async function logSession() {
