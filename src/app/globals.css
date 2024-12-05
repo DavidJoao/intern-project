@@ -28,4 +28,10 @@ body {
   .input {
     @apply border-[2px] border-slate-200 rounded p-1 shadow-md
   }
+  .error-message{
+    @apply text-red-500 font-bold
+  }
+  .success-message{
+    @apply text-green-500 font-bold
+  }
 }
