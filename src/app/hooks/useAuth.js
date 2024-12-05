@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { logSession } from "../lib/actions/session";
+import { logSession } from "../actions/session";
 
 const useAuth = () => {
     const [session, setSession] = useState(null);
