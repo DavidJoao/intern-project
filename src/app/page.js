@@ -19,11 +19,11 @@ export default function Home() {
                 <button className="theme-button" onClick={() => navigate('/pages/signup')}>Signup</button>
             </div>
             <div className="w-full lg:w-1/2 h-1/2 lg:h-full bg-primary rounded-r center-col p-4">
-                <h2 class="text-3xl font-extrabold text-black dark:text-white sm:text-4xl center-col">
-                    <span class="block text-center text-white">
+                <h2 className="text-3xl font-extrabold text-black dark:text-white sm:text-4xl center-col">
+                    <span className="block text-center text-white">
                         Ready to create forms?
                     </span>
-                    <span class="block text-black">
+                    <span className="block text-black">
                         Sign In!
                     </span>
                 </h2>
