@@ -4,15 +4,19 @@ import { useForm } from "react-hook-form"
 import Link from "next/link"
 import { registerUser } from "@/app/actions/user"
 import { navigate } from "@/app/lib/redirect"
+import { logSession } from "@/app/actions/session"
+import { useRouter } from "next/navigation"
 
 const Signup = () => {
 
+    const [session, setSession] = useState(null)
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const [buttonStatus, setButtonStatus] = useState(false)
 
     const { register, setError, clearErrors, handleSubmit, watch, formState: { errors } } = useForm();
     const password = watch("password");
+    const router = useRouter();
     const confirmPassword = watch("confirmPassword");
 
 
@@ -44,6 +48,22 @@ const Signup = () => {
             setErrorMessage("");
         }
     }, [password, confirmPassword, setError, clearErrors]);
+
+    useEffect(() => {
+        const checkSession = async () => {
+          try {
+            const userSession = await logSession();
+            setSession(userSession); 
+    
+            if (userSession) {
+              router.push('/pages/home');
+            }
+          } catch (error) {
+            console.error("Error fetching session", error);
+          }
+        };
+        checkSession();
+      }, [router]);
 
 	return (
 		<div className="w-screen h-screen center-col basic-theme">
