@@ -10,6 +10,7 @@ export default async function POST(req, res){
                 name: form.name,
                 email: form.email,
                 password: hash,
+                role: 'user'
             }
         })
         res.status(201).json({ success: true, message: 'User Created' })
