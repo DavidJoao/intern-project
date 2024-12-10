@@ -6,8 +6,11 @@ import { registerUser } from "@/app/actions/user"
 import { navigate } from "@/app/lib/redirect"
 import { logSession } from "@/app/actions/session"
 import { useRouter } from "next/navigation"
+import { useTranslation } from "react-i18next"
 
 const Signup = () => {
+
+    const { t } = useTranslation('common');
 
     const [session, setSession] = useState(null)
     const [errorMessage, setErrorMessage] = useState("")
@@ -38,10 +41,10 @@ const Signup = () => {
         if (password !== confirmPassword) {
             setError("confirmPassword", {
                 type: "manual",
-                message: "Passwords do not match",
+                message: t("match"),
             });
             setButtonStatus(true)
-            setErrorMessage("Passwords do not match");
+            setErrorMessage(t("match"));
         } else {
             clearErrors("confirmPassword");
             setButtonStatus(false)
@@ -68,21 +71,21 @@ const Signup = () => {
 	return (
 		<div className="w-screen h-screen center-col basic-theme">
 			<div className="w-auto h-auto center-col p-3 gap-3">
-				<h1 className="font-bold text-3xl">Signup</h1>
+				<h1 className="font-bold text-3xl">{t("signup")}</h1>
 				<form className="border-[1px] border-primary dark:border-none rounded w-[250px] md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3" onSubmit={handleSubmit(onSubmit)}>
 					<label>Email</label>
 					<input required className="input w-[70%]" {...register("email", { required: true })}/>
-					<label>Name</label>
+					<label>{t("name")}</label>
 					<input required className="input w-[70%]" {...register("name", { required: true })}/>
-					<label>Password</label>
+					<label>{t("password")}</label>
 					<input required name="password" className="input w-[70%]" type="password" {...register("password", { required: true })}/>
-					<label>Confirm Password</label>
+					<label>{t("confirm-password")}</label>
 					<input required name="confirmPassword" className="input w-[70%]" type="password" {...register("confirmPassword", { required: true })}/>
-					<button type="submit" className="theme-button w-[70%]" disabled={buttonStatus}> Signup </button>
+					<button type="submit" className="theme-button w-[70%]" disabled={buttonStatus}> {t("signup")} </button>
                     <p className="error-message">{errorMessage}</p>
                     <p className="success-message text-center">{successMessage}</p>
 				</form>
-                <Link className='hover:underline underline-offset-2' href={'/pages/login'}>Already have an account? Login!</Link>
+                <Link className='hover:underline underline-offset-2' href={'/pages/login'}>{t("have-account")}!</Link>
 			</div>
 		</div>
 	)
