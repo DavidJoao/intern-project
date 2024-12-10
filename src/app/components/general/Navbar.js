@@ -22,6 +22,7 @@ const Navbar = ({ session }) => {
                     <button onClick={() => logoutUser()}>Logout</button>
                     <Link href={'/pages/profile'}>Profle</Link>
                     <Link href={'/pages/home'}>Dashboard</Link>
+                    <Link href={'/pages/settings'}>Settings</Link>
                     <button onClick={() => changeLanguage('en')}>English</button>
                     <button onClick={() => changeLanguage('es')}>Spanish</button>
                     <button className="" onClick={() => toggleTheme()}>Toggle</button>
