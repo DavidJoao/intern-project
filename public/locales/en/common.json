@@ -12,5 +12,14 @@
     "match": "Passwords do not match",
     "explore-templates": "Explore Templates",
     "create-template": "Create Template",
-    "search-template": "Search Template"
+    "search-template": "Search Template",
+    "status": "Status",
+    "block-unblock": "Block/Unblock",
+    "make-admin": "Make Admin/Delete Admin",
+    "delete-user": "Delete User",
+    "block": "Block",
+    "unblock": "Unblock",
+    "delete": "Delete",
+    "create-admin": "Make Admin",
+    "remove-admin": "Remove Admin"
 }

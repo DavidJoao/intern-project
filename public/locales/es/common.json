@@ -12,5 +12,14 @@
     "match": "Las contraseñas no coinciden",
     "explore-templates": "Explorar Plantillas",
     "create-template": "Crear Plantilla",
-    "search-template": "Buscar Plantilla"
+    "search-template": "Buscar Plantilla",
+    "status": "Estado",
+    "block-unblock": "Bloquear/Desbloquear",
+    "make-admin": "Hacer/Remover Admin",
+    "delete-user": "Eliminar Usuario",
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "delete": "Eliminar",
+    "create-admin": "Hacer Admin",
+    "remove-admin": "Eliminar Admin"
   }
