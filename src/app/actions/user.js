@@ -22,3 +22,12 @@ export const signInUser = async (email, password) => {
         return { success: false, message: error.message || "An unknown error occurred." };
     }
 }
+
+export const fetchAllUsers = async () => {
+    try {
+        const response = await axios.get("/api/user/all")
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
