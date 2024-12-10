@@ -1,4 +1,13 @@
 {
     "welcome": "Welcome",
-    "description": "This is an example."
+    "description": "This is an example.",
+    "login": "Login",
+    "signup": "Signup",
+    "readyto": "Ready to create forms?",
+    "password": "Password",
+    "confirm-password": "Confirm Password",
+    "no-account": "Do not have an account? Signup!",
+    "have-account": "Already have an account? Log In",
+    "name": "Name",
+    "match": "Passwords do not match"
 }
