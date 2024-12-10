@@ -9,5 +9,8 @@
     "no-account": "No tienes una cuenta? Crea una!",
     "have-account": "Ya tienes una cuenta? Inicia Sesión",
     "name": "Nombre",
-    "match": "Las contraseñas no coinciden"
+    "match": "Las contraseñas no coinciden",
+    "explore-templates": "Explorar Plantillas",
+    "create-template": "Crear Plantilla",
+    "search-template": "Buscar Plantilla"
   }

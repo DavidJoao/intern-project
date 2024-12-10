@@ -9,5 +9,8 @@
     "no-account": "Do not have an account? Signup!",
     "have-account": "Already have an account? Log In",
     "name": "Name",
-    "match": "Passwords do not match"
+    "match": "Passwords do not match",
+    "explore-templates": "Explore Templates",
+    "create-template": "Create Template",
+    "search-template": "Search Template"
 }
