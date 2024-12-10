@@ -1,8 +1,9 @@
+'use client'
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { logSession } from "../actions/session";
 
-const useAuth = () => {
+export const useAuth = () => {
     const [session, setSession] = useState(null);
     const router = useRouter();
 
@@ -24,5 +25,3 @@ const useAuth = () => {
 
     return session
 }
-
-export default useAuth;
