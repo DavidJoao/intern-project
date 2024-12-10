@@ -7,11 +7,14 @@ import { signInUser } from '@/app/actions/user';
 import { logoutUser } from '@/app/actions/session';
 import { useRouter } from 'next/navigation';
 import { logSession } from '@/app/actions/session';
+import { useTranslation } from 'react-i18next';
 
 
 const Login = () => {
 
     const router = useRouter();
+
+    const { t } = useTranslation('common');
 
     const [session, setSession] = useState(null)
     const [errorMessage, setErrorMessage] = useState("")
@@ -25,6 +28,8 @@ const Login = () => {
             const response = await signInUser(data.email, data.password);
             if (response.error === null) {
                 navigate('/pages/home');
+            } else if (response.error === 'CredentialsSignin') {
+              setErrorMessage("Invalid Credentials")
             }
             router.refresh();
             return response
@@ -52,16 +57,16 @@ const Login = () => {
     return (
         <div className='w-screen h-screen center-col basic-theme'>
             <div className='w-auto h-auto center-col p-3 gap-3'>
-                <h1 className='font-bold text-3xl'>Login</h1>
+                <h1 className='font-bold text-3xl'>{t('login')}</h1>
                 <form className='border-[1px] border-primary dark:border-none rounded w-[250px] md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3' onSubmit={handleSubmit(onSubmit)}>
                     <label>Email</label>
                     <input required className='input w-[70%]' {...register("email", { required: true })}/>
-                    <label>Password</label>
+                    <label>{t('password')}</label>
                     <input required className='input w-[70%]' type='password'  {...register("password", { required: true })}/>
-                    <button type='submit' className='theme-button w-[70%]'>Login</button>
-                    <button onClick={() => logoutUser()}>logout</button>
+                    <button type='submit' className='theme-button w-[70%]'>{t("login")}</button>
+                    <p className='error-message'>{errorMessage}</p>
                 </form>
-                <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>Do not have an account? Signup!</Link>
+                <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>{t('no-account')}</Link>
             </div>
         </div>
     )
