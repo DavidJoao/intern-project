@@ -14,13 +14,24 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  role      Role     @default(user)
+  status    Status   @default(active)
 
   templates Template[]
   forms     Form[]
   comments  Comment[]
   likes     Like[]
   answers   Answer[]
-  formRoles FormRole[]
+}
+
+enum Role {
+  admin
+  user
+}
+
+enum Status {
+  active
+  blocked
 }
 
 model Template {
@@ -83,22 +94,6 @@ model Form {
   user        User     @relation(fields: [userId], references: [id])
   answers     Answer[]
   comments    Comment[]
-  formRoles   FormRole[]
-}
-
-model FormRole {
-  id        String   @id @default(uuid())
-  formId    String
-  userId    String
-  role      Role
-
-  form      Form     @relation(fields: [formId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-}
-
-enum Role {
-  admin
-  user
 }
 
 model Answer {
