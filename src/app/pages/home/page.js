@@ -1,5 +1,6 @@
 'use client'
 import Loading from '@/app/components/general/Loading'
+import CreateTemplate from '@/app/components/templates/CreateTemplate'
 import { useAuth } from '@/app/hooks/useAuth'
 import { icons } from '@/app/lib/icons'
 import React, { useEffect } from 'react'
@@ -38,13 +39,7 @@ const Home = () => {
 				</div>
 
 				{/* Create Template */}
-				<div className='border-[1px] border-blue-400 h-full w-[30%] hidden md:flex flex-col items-center p-3'>
-					<p className='font-bold'>{t("create-template")}</p>
-					{/* MAP TEMPLATES */}
-					<div className='border-[1px] border-green-500 w-full h-full p-3'>
-
-					</div>
-				</div>
+				<CreateTemplate />
 			</div>
         </div>
     ) : (
