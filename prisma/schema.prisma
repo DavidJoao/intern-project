@@ -41,7 +41,7 @@ model Template {
   topic       Topic
   tags        String[]
   imageUrl    String
-  isPublic    Boolean
+  isPublic    Boolean  @default(true)
   creatorId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -78,10 +78,9 @@ model Question {
 }
 
 enum QuestionType {
-  single_line
+  text
   multi_line
   integer
-  checkbox
 }
 
 model Form {
