@@ -11,10 +11,6 @@ const Home = () => {
   const user = useAuth();
   const { t } = useTranslation('common');
 
-  useEffect(() => {
-    // console.log(user);
-  }, [user]);
-
   return (
     <>
     {user ? (
@@ -39,7 +35,7 @@ const Home = () => {
 				</div>
 
 				{/* Create Template */}
-				<CreateTemplate />
+				<CreateTemplate userId={user.user.id}/>
 			</div>
         </div>
     ) : (
