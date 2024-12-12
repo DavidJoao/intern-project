@@ -25,6 +25,9 @@ body {
   .theme-button {
     @apply border-[1px] border-primary shadow-lg bg-white text-primary dark:text-white dark:bg-primary dark:hover:bg-blue-400 w-[250px] p-1 font-bold hover:bg-blue-400 hover:text-white rounded
   }
+  .blue-button {
+    @apply border-[1px] border-primary shadow-lg bg-blue-500 text-white dark:text-white dark:bg-primary dark:hover:bg-blue-400 w-[250px] p-1 font-bold hover:bg-blue-400 hover:text-white rounded
+  }
   .input {
     @apply border-[2px] border-slate-200 rounded p-1 shadow-md
   }
