@@ -3,13 +3,19 @@ import { SessionProvider } from 'next-auth/react'
 import { createContext, useContext, useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next';
 import i18next from '../../lib/i18n';
+import { fetchTemplates } from '@/app/actions/templates';
 
 const AppContext = createContext();
 
 const Provider = ( { children } ) => {
 
-    const [appNotification, setAppNotification] = useState("")
+    const [appNotification, setAppNotification] = useState("");
+    const [templates, setTemplates] = useState([]);
     const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+      loadAllTemplates()
+    }, [])
 
     useEffect(() => {
       const savedTheme = localStorage.getItem('theme');
@@ -31,10 +37,15 @@ const Provider = ( { children } ) => {
       localStorage.setItem('theme', newTheme);
     };
 
+    const loadAllTemplates = async () => {
+      const { data } = await fetchTemplates();
+      setTemplates(data.templates)
+    }
+
     return (
         <SessionProvider>
             <I18nextProvider i18n={i18next}>
-                <AppContext.Provider value={{ appNotification, setAppNotification, toggleTheme }}>
+                <AppContext.Provider value={{ appNotification, setAppNotification, toggleTheme, templates, loadAllTemplates }}>
                 {children}
                 </AppContext.Provider>
             </I18nextProvider>
