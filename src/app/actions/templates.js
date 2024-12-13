@@ -58,7 +58,17 @@ export async function uploadImage (image) {
 
 export const getTemplateById = async (templateId) => {
     try {
-        const response = await axios.get(`/api/templates/getById?templateId=${templateId}`)
+        const response = await axios.get(`/api/templates/getById?templateId=${templateId}`);
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+export const fetchTemplates = async () => {
+    try {
+        const response = await axios.get('/api/templates/all');
         return response;
     } catch (error) {
         console.log(error)
