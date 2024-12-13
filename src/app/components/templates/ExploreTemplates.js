@@ -18,7 +18,7 @@ const ExploreTemplates = () => {
       { templates ? (
         templates.map((template, index) => {
           return (
-            <Tooltip text={template.description}>
+            <Tooltip key={index} text={template.description}>
             <div key={index} className='border rounded bg-slate-200 hover:bg-slate-100 p-3 h-[150px] flex flex-col items-center justify-evenly' onClick={() => navigate(`/pages/template/${template.id}`)}>
               <Image src={template.imageUrl} width={100} height={100}/>
               <p>{template.title}</p>
