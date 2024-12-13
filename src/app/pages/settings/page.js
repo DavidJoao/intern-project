@@ -1,24 +1,72 @@
 'use client'
-import { fetchAllUsers } from '@/app/actions/user'
+import { deleteUser, fetchAllUsers, switchBlock, switchRoles } from '@/app/actions/user'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '@/app/hooks/useAuth'
 import Loading from '@/app/components/general/Loading'
 import { useTranslation } from 'react-i18next'
+import { logoutUser } from '@/app/actions/session'
+import { navigate } from '@/app/lib/redirect'
+import { useAppContext } from '@/app/components/context/provider'
 
 const Settings = () => {
 
+    const { loadAllTemplates } = useAppContext();
     const { t } = useTranslation('common');
     const user = useAuth();
 
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        const initializeData = async () => {
-            const { data } = await fetchAllUsers();
-            setUsers(data.users);
-        }
         initializeData();
     }, [])
+
+    const initializeData = async () => {
+        const { data } = await fetchAllUsers();
+        setUsers(data.users);
+    }
+
+    const handleRoleSwitch = async (e, userId) => {
+        e.preventDefault()
+        try {
+              await switchRoles(userId);
+              await initializeData();
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    const handleBlockSwitch = async (e, userId) => {
+        e.preventDefault()
+        try {
+                const updatedUser = await switchBlock(userId);
+                await initializeData();
+                console.log(updatedUser)
+                if (userId === user.user.id && updatedUser.data.user.status === "blocked"){
+                    logoutUser();
+                    navigate('/pages/login')
+                }
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
+    const handleUserDeletion = async (e, userId) => {
+        e.preventDefault();
+        try {
+            await deleteUser(userId)
+            if (userId === user.user.id) {
+                await logoutUser();
+                navigate('/pages/login')
+            }
+            await initializeData();
+            await loadAllTemplates();
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
+    }
 
   return (
     <>
@@ -38,10 +86,7 @@ const Settings = () => {
                 </thead>
                 <tbody>
                 {users.map((user, index) => (
-                    <tr
-                    key={index}
-                    className="border-t hover:bg-gray-50 text-sm text-gray-700"
-                    >
+                    <tr key={index} className="border-t hover:bg-gray-50 text-sm text-gray-700">
                     <td className="p-4">{user.name}</td>
                     <td className="p-4">{user.email}</td>
                     <td className="p-4">
@@ -56,13 +101,21 @@ const Settings = () => {
                         </span>
                     </td>
                     <td className="p-4">
-                        <button className="px-3 py-1 text-white rounded font-bold bg-blue-500 hover:bg-blue-600"> {user.status === "active" ? `${t("block")}` : `${t("unblock")}`} </button>
+                    { user.status === 'active' ? (
+                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("block")} </button>
+                        ) : (
+                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("unblock")} </button>
+                        )}
                     </td>
                     <td className="p-4">
-                        <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600"> {t("create-admin")} </button>
+                        { user.role === 'admin' ? (
+                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("remove-admin")} </button>
+                        ) : (
+                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("create-admin")} </button>
+                        )}
                     </td>
                     <td className="p-4">
-                        <button className="px-3 py-1 text-white rounded font-bold bg-red-500 hover:bg-red-600"> {t("delete")} </button>
+                        <button className="px-3 py-1 text-white rounded font-bold bg-red-500 hover:bg-red-600" onClick={(e) => handleUserDeletion(e, user.id)}> {t("delete")} </button>
                     </td>
                     </tr>
                 ))}
