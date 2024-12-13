@@ -16,7 +16,7 @@ const Navbar = ({ session }) => {
 
     return (
         <>
-            <div className='border-[1px] border-black w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed'>
+            <div className='w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed shadow-lg'>
                 {session ? (
                     <>
                     <button onClick={() => logoutUser()}>Logout</button>
