@@ -3,8 +3,7 @@ import { navigate } from '@/app/lib/redirect';
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link';
-import { signInUser } from '@/app/actions/user';
-import { logoutUser } from '@/app/actions/session';
+import { fetchUserStatusByEmail, signInUser } from '@/app/actions/user';
 import { useRouter } from 'next/navigation';
 import { logSession } from '@/app/actions/session';
 import { useTranslation } from 'react-i18next';
@@ -25,14 +24,19 @@ const Login = () => {
     const onSubmit = async (data) => {
         setErrorMessage("");
         try {
-            const response = await signInUser(data.email, data.password);
-            if (response.error === null) {
-                navigate('/pages/home');
-            } else if (response.error === 'CredentialsSignin') {
-              setErrorMessage("Invalid Credentials")
+            const userStatus = await fetchUserStatusByEmail(data.email)
+            if (userStatus === 'blocked') {
+              setErrorMessage("Account Blocked")
+            } else {
+              const response = await signInUser(data.email, data.password);
+              if (response.error === null) {
+                  navigate('/pages/home');
+              } else if (response.error === 'CredentialsSignin') {
+                setErrorMessage("Invalid Credentials")
+              }
+              router.refresh();
+              return response
             }
-            router.refresh();
-            return response
         } catch (error) {
             return error
         }
