@@ -31,3 +31,39 @@ export const fetchAllUsers = async () => {
         return error;
     }
 }
+
+export const fetchUserStatusByEmail = async (email) => {
+    try {
+        const response = await axios.get(`/api/user/${email}`)
+        return response.data.user.status;
+    } catch (error) {
+        return error
+    }
+}
+
+export const switchRoles = async (userId) => {
+    try {
+        const response = await axios.patch(`/api/user/switchRole?userId=${userId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+export const switchBlock = async (userId) => {
+    try {
+        const response = await axios.patch(`/api/user/switchBlock?userId=${userId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+export const deleteUser = async (userId) => {
+    try {
+        const response = await axios.post(`/api/user/delete?userId=${userId}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
