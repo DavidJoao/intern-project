@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   name      String   @unique
   email     String   @unique
   password  String
@@ -46,7 +46,7 @@ model Template {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  creator     User       @relation(fields: [creatorId], references: [id])
+  creator     User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   questions   Question[]
   forms       Form[]
   comments    Comment[]
@@ -74,7 +74,7 @@ model Question {
   order            Int
   asnwers          Answer[]
 
-  template         Template @relation(fields: [templateId], references: [id])
+  template         Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
 }
 
 enum QuestionType {
@@ -89,8 +89,8 @@ model Form {
   userId      String
   submittedAt DateTime
 
-  template    Template @relation(fields: [templateId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
+  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   answers     Answer[]
   comments    Comment[]
 }
@@ -102,9 +102,9 @@ model Answer {
   userId     String
   value      Json
 
-  form       Form     @relation(fields: [formId], references: [id])
-  question   Question @relation(fields: [questionId], references: [id])
-  user       User     @relation(fields: [userId], references: [id])
+  form       Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -115,9 +115,9 @@ model Comment {
   content     String
   createdAt   DateTime @default(now())
 
-  template    Template @relation(fields: [templateId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
-  form        Form?    @relation(fields: [formId], references: [id])
+  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  form        Form?    @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
 
 model Like {
@@ -125,6 +125,6 @@ model Like {
   templateId  String
   userId      String
 
-  template    Template @relation(fields: [templateId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
+  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
