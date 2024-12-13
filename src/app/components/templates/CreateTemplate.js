@@ -46,25 +46,27 @@ const CreateTemplate = ({ userId }) => {
 
     const submitForm = async (data) => {
         try {
-            const imageUrl = await Promise.all(uploadImage(image))
-            setValue("imageUrl", imageUrl)
-            setValue("creatorId", userId)
-            const response = await createTemplate(data)
-            console.log(response)
-            if (response.status === 201){
-                reset();
-                navigate(`/pages/template/${response.data.template.id}`);
+            const imageUrl = await uploadImage(image);
+            if (imageUrl) {
+                data.imageUrl = imageUrl;
+                data.creatorId = userId;
+                const response = await createTemplate(data);
+                if (response.status === 201) {
+                    reset();
+                    navigate(`/pages/template/${response.data.template.id}`);
+                }
+    
+                return response;
             }
-            return response
         } catch (error) {
             return error
         }
     }
 
   return (
-    <div className='border-[1px] border-blue-400 h-full w-[30%] hidden md:flex flex-col items-center p-3'>
+    <div className='h-full w-[30%] hidden md:flex flex-col items-center p-3'>
         <p className='font-bold'>{t("create-template")}</p>
-        <form className='border-[1px] border-green-500 w-full h-full p-3' onSubmit={handleSubmit(submitForm)}>
+        <form className='border-[3px] border-slate-200 w-full h-full p-3 rounded shadow-lg bg-white' onSubmit={handleSubmit(submitForm)}>
             <div className='p-2'>
                 <p className='text-xs text-gray-400'>Topic</p>
                 <select className='input w-full' onChange={(e) => setValue("topic", e.target.value)}>
