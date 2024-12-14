@@ -11,8 +11,6 @@ const ExploreTemplates = () => {
 
   const { templates } = useAppContext();
 
-  console.log(templates)
-
   return (
     <div className='border-[3px] border-slate-200 rounded shadow-lg w-full h-full p-3 bg-white grid grid-cols-6 gap-2 items-start'>
       { templates ? (
