@@ -4,10 +4,14 @@ import { logoutUser } from '@/app/actions/session'
 import Link from 'next/link'
 import { useTranslation } from "react-i18next";
 import { useAppContext } from '../context/provider';
+import { CiLogout, CiUser, CiSettings, CiSun } from "react-icons/ci";
+import { MdOutlineDashboard, MdLanguage } from "react-icons/md";
+import { GoMoon } from "react-icons/go";
+
 
 const Navbar = ({ session }) => {
 
-    const { toggleTheme } = useAppContext()
+    const { toggleTheme, theme } = useAppContext()
     const { t, i18n } = useTranslation('common');
 
     const changeLanguage = async (lng) => {
@@ -16,22 +20,40 @@ const Navbar = ({ session }) => {
 
     return (
         <>
-            <div className='w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed shadow-lg'>
+            <div className='w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed shadow-lg dark:text-white'>
                 {session ? (
                     <>
-                    <button onClick={() => logoutUser()}>Logout</button>
-                    <Link href={'/pages/profile'}>Profle</Link>
-                    <Link href={'/pages/home'}>Dashboard</Link>
-                    <Link href={'/pages/settings'}>Settings</Link>
-                    <button onClick={() => changeLanguage('en')}>English</button>
-                    <button onClick={() => changeLanguage('es')}>Spanish</button>
-                    <button className="" onClick={() => toggleTheme()}>Toggle</button>
+                    <button className='flex flex-col items-center text-md' onClick={() => logoutUser()}><CiLogout/>Logout</button>
+                    <Link className='flex flex-col items-center text-md' href={'/pages/profile'}><CiUser /> Profile</Link>
+                    <Link className='flex flex-col items-center text-md' href={'/pages/home'}><MdOutlineDashboard />Dashboard</Link>
+                    <Link className='flex flex-col items-center text-md' href={'/pages/settings'}><CiSettings /> Settings</Link>
+                    <div className='flex flex-col items-center text-md'>
+                        <MdLanguage />
+                        <select className='bg-none text-black bg-slate-100/0 rounded' onChange={(e) => changeLanguage(e.target.value)}>
+                            <option value={'en'}>EN</option>
+                            <option value={'es'}>ES</option>
+                        </select>
+                    </div>
+                    { theme === 'dark' ? (
+                        <button className="" onClick={() => toggleTheme()}><CiSun /></button>
+                    ) : (
+                        <button className="" onClick={() => toggleTheme()}><GoMoon /></button>
+                    ) }
                 </>
                 ) : (
                     <>
-                    <button onClick={() => changeLanguage('en')}>English</button>
-                    <button onClick={() => changeLanguage('es')}>Spanish</button>
-                    <button className="" onClick={() => toggleTheme()}>Toggle</button>
+                    <div className='flex flex-col items-center text-md'>
+                        <MdLanguage />
+                        <select className='bg-none text-black bg-slate' onChange={(e) => changeLanguage(e.target.value)}>
+                            <option value={'en'}>EN</option>
+                            <option value={'es'}>ES</option>
+                        </select>
+                    </div>
+                    { theme === 'dark' ? (
+                        <button className="" onClick={() => toggleTheme()}><CiSun /></button>
+                    ) : (
+                        <button className="" onClick={() => toggleTheme()}><GoMoon /></button>
+                    ) }
                     </>
             )}
             </div>
