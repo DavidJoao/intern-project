@@ -45,7 +45,7 @@ const Provider = ( { children } ) => {
     return (
         <SessionProvider>
             <I18nextProvider i18n={i18next}>
-                <AppContext.Provider value={{ appNotification, setAppNotification, toggleTheme, templates, loadAllTemplates }}>
+                <AppContext.Provider value={{ appNotification, setAppNotification, toggleTheme, theme, templates, loadAllTemplates }}>
                 {children}
                 </AppContext.Provider>
             </I18nextProvider>
