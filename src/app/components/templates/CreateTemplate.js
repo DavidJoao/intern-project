@@ -6,9 +6,11 @@ import { useForm } from 'react-hook-form';
 import imageCompression from 'browser-image-compression';
 import Image from 'next/image';
 import { navigate } from '@/app/lib/redirect';
+import { useAppContext } from '../context/provider';
 
 const CreateTemplate = ({ userId }) => {
 
+    const { loadAllTemplates } = useAppContext();
     const { t } = useTranslation('common');
     const { register, setValue, handleSubmit, watch, formState: { errors }, reset } = useForm();
 
@@ -52,8 +54,10 @@ const CreateTemplate = ({ userId }) => {
                 data.creatorId = userId;
                 const response = await createTemplate(data);
                 if (response.status === 201) {
+                    await navigate(`/pages/template/${response.data.template.id}`);
+                    await loadAllTemplates();
                     reset();
-                    navigate(`/pages/template/${response.data.template.id}`);
+
                 }
     
                 return response;
