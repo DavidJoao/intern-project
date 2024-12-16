@@ -7,7 +7,7 @@ import { useAppContext } from '../context/provider';
 import { CiLogout, CiUser, CiSettings, CiSun } from "react-icons/ci";
 import { MdOutlineDashboard, MdLanguage } from "react-icons/md";
 import { GoMoon } from "react-icons/go";
-
+import { icons } from '@/app/lib/icons';
 
 const Navbar = ({ session }) => {
 
@@ -39,6 +39,10 @@ const Navbar = ({ session }) => {
                     ) : (
                         <button className="" onClick={() => toggleTheme()}><GoMoon /></button>
                     ) }
+                    <form className='h-auto w-auto flex flex-row items-center justify-center gap-2 p-5 mx-auto'>
+					    <input className='input' placeholder={t("search-template")}/>
+					    <button>{icons.search}</button>
+				    </form>
                 </>
                 ) : (
                     <>
