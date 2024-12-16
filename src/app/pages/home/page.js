@@ -16,14 +16,6 @@ const Home = () => {
     <>
     {user ? (
         <div className='w-screen h-screen flex flex-col pt-[50px] bg-slate-200'>
-
-			<div className='h-[10%] flex items-center justify-center p-3 bg-slate-100'>
-				<form className='h-auto w-auto flex flex-row items-center justify-center gap-2 p-5'>
-					<input className='input' placeholder={t("search-template")}/>
-					<button>{icons.search}</button>
-				</form>
-			</div>
-
 			<div className='h-[90%] flex flex-row'>
 				<div className='h-full w-full md:w-[70%] flex flex-col items-center p-3'>
 					<p className='font-bold'>{t("explore-templates")}</p>
