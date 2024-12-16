@@ -65,22 +65,24 @@ enum Topic {
 }
 
 model Question {
-  id               String   @id @default(uuid())
+  id               String       @id @default(uuid())
   templateId       String
   type             QuestionType
   title            String
   description      String
   displayInResults Boolean
   order            Int
-  asnwers          Answer[]
+  options          String[]
+  answers          Answer[]
 
-  template         Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  template         Template     @relation(fields: [templateId], references: [id], onDelete: Cascade)
 }
 
 enum QuestionType {
   text
   multi_line
   integer
+  checkbox
 }
 
 model Form {
