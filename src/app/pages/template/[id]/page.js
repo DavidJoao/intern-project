@@ -29,22 +29,6 @@ const Template = (context) => {
 
   const handleQuestionChange = (e, questionType) => {
         e.preventDefault();
-        switch (questionType) {
-            case 'number':
-                setCurrentQuestionForm(<Number />)   
-                break;
-            case 'single':
-                setCurrentQuestionForm(<SingleLine />)   
-                break;
-            case 'checkbox':
-                setCurrentQuestionForm(<CheckBox />)   
-                break;
-            case 'multiple':
-                setCurrentQuestionForm(<MultipleLine />)   
-                break;
-            default:
-                break;
-        }
   }
 
   return (
