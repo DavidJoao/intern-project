@@ -1,7 +1,10 @@
 'use client'
+import { getCommentsByTemplate } from '@/app/actions/comments';
 import { getTemplateById } from '@/app/actions/templates'
+import CreateComment from '@/app/components/comments/CreateComment';
 import Loading from '@/app/components/general/Loading'
 import AddQuestion from '@/app/components/questions/AddQuestion';
+import Comment from '@/app/components/comments/Comment';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { FcLike, FcDislike } from "react-icons/fc";
@@ -14,21 +17,23 @@ const Template = (context) => {
   const { id } = context.params
 
   const [template, setTemplate] = useState(null)
+  const [comments, setComments] = useState(null)
   const [currentQuestionForm, setCurrentQuestionForm] = useState(null)
 
   useEffect(() => {
     const initiateTemplate = async () => {
       if (id) {
         const { data } = await getTemplateById(id);
+        await loadComments(id)
         setTemplate(data.foundTemplate);
-        console.log(data)
       }
     }
     initiateTemplate()
   }, [])
 
-  const handleQuestionChange = (e, questionType) => {
-        e.preventDefault();
+  const loadComments = async (id) => {
+    const comments = await getCommentsByTemplate(id);
+    setComments(comments.data.comments);
   }
 
   return (
@@ -64,7 +69,21 @@ const Template = (context) => {
 
 						{/* Comments */}
 						<section className="w-full md:w-[30%] h-[30%] md:h-full border-[1px] border-slate-200 p-3">
-                            <p className='font-bold text-black text-center'>Comments</p>
+                            <div className='border h-[90%] p-2 w-ful;'>
+                                <p className='font-bold text-black text-center'>Comments</p>
+                                { comments ? (
+                                    comments.map((comment, index) => {
+                                        return (
+                                            <Comment key={index} comment={comment}/>
+                                        )
+                                    })
+                                ) : (
+                                    <p>No comments available</p>
+                                ) }
+                            </div>
+                            <div className='border h-[10%] p-2 flex items-center justify-center'>
+                                <CreateComment template={template} loadComments={loadComments}/>
+                            </div>
                         </section>
 					</main>
 				</div>
