@@ -7,10 +7,8 @@ import AddQuestion from '@/app/components/questions/AddQuestion';
 import Comment from '@/app/components/comments/Comment';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import { FcLike, FcDislike } from "react-icons/fc";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
-
-
+import Like from '@/app/components/templates/Like';
 
 const Template = (context) => {
 
@@ -49,7 +47,7 @@ const Template = (context) => {
 						</div>
 
 						<div className="w-[50%] flex flex-col items-end justify-evenly">
-                            <button className='border blue-button w-auto gap-1 flex items-center'>Like <FcLike/></button>
+                            <Like template={template}/>
                             <Link href={`/pages/template/${template.id}/forms`} className='border blue-button w-auto gap-1 flex items-center'>Forms <IoArrowForwardCircleOutline/> </Link>
                         </div>
 					</header>
