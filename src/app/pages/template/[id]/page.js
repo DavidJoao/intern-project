@@ -69,12 +69,12 @@ const Template = (context) => {
 
 						{/* Comments */}
 						<section className="w-full md:w-[30%] h-[30%] md:h-full border-[1px] border-slate-200 p-3">
-                            <div className='border h-[90%] p-2 w-ful;'>
-                                <p className='font-bold text-black text-center'>Comments</p>
+                            <p className='font-bold text-black text-center'>Comments</p>
+                            <div className='border h-[90%] max-h-[500px] flex flex-col gap-2 p-2 w-full overflow-auto'>
                                 { comments ? (
                                     comments.map((comment, index) => {
                                         return (
-                                            <Comment key={index} comment={comment}/>
+                                            <Comment key={index} comment={comment} loadComments={loadComments} templateId={id}/>
                                         )
                                     })
                                 ) : (
