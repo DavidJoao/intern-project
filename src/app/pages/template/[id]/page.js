@@ -9,6 +9,9 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import Like from '@/app/components/templates/Like';
+import { getQuestionsByTemplate } from '@/app/actions/questions';
+import Question from '@/app/components/questions/Question';
+import QuestionsSection from '@/app/components/questions/QuestionsSection';
 
 const Template = (context) => {
 
@@ -16,13 +19,14 @@ const Template = (context) => {
 
   const [template, setTemplate] = useState(null)
   const [comments, setComments] = useState(null)
-  const [currentQuestionForm, setCurrentQuestionForm] = useState(null)
+  const [questions, setQuestions] = useState(null)
 
   useEffect(() => {
     const initiateTemplate = async () => {
       if (id) {
         const { data } = await getTemplateById(id);
         await loadComments(id)
+        await loadQuestions(id)
         setTemplate(data.foundTemplate);
       }
     }
@@ -34,10 +38,15 @@ const Template = (context) => {
     setComments(comments.data.comments);
   }
 
+  const loadQuestions = async (id) => {
+    const questions = await getQuestionsByTemplate(id);
+    setQuestions(questions.data.questions);
+  }
+
   return (
 		<>
 			{template ? (
-				<div className="w-screen h-screen flex flex-col pt-[50px] border-[1px] border-black">
+				<div className="w-screen h-auto md:h-screen flex flex-col pt-[50px] border-[1px] border-black">
                     
 					<header className="w-full h-[20%] flex flex-row bg-center relative isolate p-3">
 						<div className="absolute inset-0 bg-cover bg-center filter brightness-50 -z-10" style={{ backgroundImage: `url('${template.imageUrl}')` }}></div>
@@ -56,12 +65,9 @@ const Template = (context) => {
 					<main className="w-full h-full flex flex-col md:flex-row gap-2">
 						{/* Questions */}
 						<section className="flex flex-col w-full md:w-[70%] h-[70%] md:h-full p-3 border-[1px] border-slate-200 gap-2">
-                            { template.questions ? (
-                                <p></p>
-                            ) : (<p className='text-center'>No questions at the moment</p>) }
-                            <div className='flex flex-row flex-col items-center w-auto gap-2 border-[3px] rounded'>
-                                <p className='font-bold'>Add Question</p>
-                                <AddQuestion />
+                            <div className='flex flex-row flex-col items-center w-auto gap-2 border-[3px] rounded p-2 h-full'>
+                                <AddQuestion template={template} loadQuestions={loadQuestions}/>
+                                <QuestionsSection questions={questions} setQuestions={setQuestions}/>
                             </div>
                         </section>
 
