@@ -19,3 +19,23 @@ export const getCommentsByTemplate = async (templateId) => {
         return error
     }
 }
+
+export const deleteCommentById = async (commentId) => {
+    try {
+        const response = await axios.delete(`/api/comments/delete?commentId=${commentId}`)
+        return response
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const editCommentById = async (commentId, data) => {
+    try {
+        const response = await axios.patch(`/api/comments/edit?commentId=${commentId}`, data, { headers: { 'Content-Type':'application/json' } });
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
