@@ -76,6 +76,8 @@ model Question {
   answers          Answer[]
 
   template         Template     @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([id, templateId])
 }
 
 enum QuestionType {
