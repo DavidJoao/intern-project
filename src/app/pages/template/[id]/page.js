@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react'
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import Like from '@/app/components/templates/Like';
 import { getQuestionsByTemplate } from '@/app/actions/questions';
-import Question from '@/app/components/questions/Question';
 import QuestionsSection from '@/app/components/questions/QuestionsSection';
 
 const Template = (context) => {
