@@ -19,3 +19,23 @@ export const getQuestionsByTemplate = async (templateId) => {
         return error;
     }
 }
+
+export const editQuestionById = async (questionId, data) => {
+    try {
+        const response = await axios.patch(`/api/questions/edit?questionId=${questionId}`, data, { headers: { 'Content-Type': 'application/json' } });
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error;
+    }
+}
+
+export const deleteQuestionById = async (questionId) => {
+    try {
+        const response = await axios.delete(`/api/questions/delete?questionId=${questionId}`);
+        return response;
+    } catch (error){
+        console.log(error);
+        return error;
+    }
+}
