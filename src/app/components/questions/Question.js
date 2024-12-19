@@ -74,8 +74,8 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions }) =>
 	}
 
 	return (
-		<form ref={ref} className="flex flex-col items-start w-auto p-3 gap-2 border-[1px] rounded bg-gray-100" onSubmit={handleEdit}>
-			<div className="flex items-center justify-between border w-full">
+		<form ref={ref} className="flex flex-col items-start w-full p-3 gap-2 border-[1px] rounded bg-gray-100 cursor-pointer" onSubmit={handleEdit}>
+			<div className="flex items-center justify-between w-full">
 				{ isEditing ? ( <input className="input" placeholder="Title" value={newEditContent.title} onChange={(e) => setNewEditContent({...newEditContent, ['title']: e.target.value})}/> ) 
 				: 
 				( <p className="font-bold">{question.title}</p> ) }
