@@ -39,3 +39,13 @@ export const deleteQuestionById = async (questionId) => {
         return error;
     }
 }
+
+export const updateOrder = async (templateId, data) => {
+    try {
+        const response = await axios.post(`/api/questions/updateOrder?templateId=${templateId}`, JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } });
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error
+    }
+}
