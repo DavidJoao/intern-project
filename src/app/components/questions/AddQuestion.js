@@ -17,6 +17,7 @@ const AddQuestion = ({ template, loadQuestions }) => {
         await createQuestion(data);
         await loadQuestions(template?.id);
         reset();
+        setValue("templateId", template?.id)
     }
 
     return (
