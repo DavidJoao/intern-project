@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/app/hooks/useAuth';
 import { createComment } from '@/app/actions/comments';
-import ReactTimeago from 'react-timeago';
+import { socket } from '@/app/lib/socket';
 
 const CreateComment = ({ template, loadComments }) => {
     
     const user = useAuth();
     const { register, setValue, reset, handleSubmit, formState: { errors } } = useForm();
+    
+    useEffect(() => {
+      socket.on("Update Comments", () => {
+        loadComments(template?.id);
+      });
+
+      return () => {
+        socket.off("Update Comments");
+      };
+    }, [template, loadComments]);
 
     const postComment = async (data) => {
       if (user && template) {
@@ -21,6 +31,8 @@ const CreateComment = ({ template, loadComments }) => {
         await createComment(commentData);
         await loadComments(template?.id);
         reset();
+
+        socket.emit("update comments");
       }
     }
     
