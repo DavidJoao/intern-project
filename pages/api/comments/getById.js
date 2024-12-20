@@ -12,6 +12,9 @@ export default async function GET (req, res) {
                 },
               },
             },
+            orderBy: {
+              createdAt: 'asc'
+            }
           });
       
           const commentsWithUser = foundComments.map((comment) => ({
