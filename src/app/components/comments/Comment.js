@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactTimeago from 'react-timeago'
 import { FaTrash } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { useAuth } from '@/app/hooks/useAuth';
 import { deleteCommentById, editCommentById } from '@/app/actions/comments';
+import { socket } from '@/app/lib/socket';
 
 const Comment = ({ comment, loadComments, templateId }) => {
 
@@ -12,15 +13,27 @@ const Comment = ({ comment, loadComments, templateId }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [newContent, setNewContent] = useState(comment.content)
 
+  useEffect(() => {
+    socket.on("Update Comments", () => {
+      loadComments(templateId);
+    });
+
+    return () => {
+      socket.off("Update Comments");
+    };
+  }, [comment, loadComments]);
+
   const handleEditComment = async () => {
     await editCommentById(comment.id, newContent)
     await loadComments(templateId);
     setIsEditing(false);
+    socket.emit("update comments");
   }
 
   const handleDeleteComment = async () => {
     await deleteCommentById(comment?.id);
     await loadComments(templateId);
+    socket.emit("update comments");
   }
 
   return (
