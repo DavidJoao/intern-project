@@ -23,6 +23,7 @@ const AddQuestion = ({ template, loadQuestions }) => {
     return (
     <div className='p-2'>
         <form className='p-1 flex flex-col gap-1 w-[250px]' onSubmit={handleSubmit(submitForm)}>
+            <label className='font-bold text-center'>Add Question</label>
             <label className='font-bold'>Question Type</label>
             <select className='input' onChange={(e) => {
                 setSelection(e.target.value)
