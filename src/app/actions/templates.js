@@ -75,3 +75,43 @@ export const fetchTemplates = async () => {
         return error
     }
 }
+
+export const updateTemplateById = async (templateId, data) => {
+    try {
+        const response = await axios.patch(`/api/templates/edit?templateId=${templateId}`, data, { headers: { 'Content-Type': 'application/json' } })
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error
+    }
+}
+
+export const getTemplatesByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`/api/templates/getByUserId?userId=${userId}`)
+        return response;
+    } catch (error){
+        console.log(error);
+        return error;
+    }
+}
+
+export const updateTemplatesOrderAPI = async (templates) => {
+    try {
+        const response = await axios.post(`/api/templates/updateOrder`, templates, { headers: { 'Content-Type':'application/json' } })
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error;
+    }
+}
+
+export const deleteTemplateById = async (templateId) => {
+    try {
+        const response = await axios.delete(`/api/templates/delete?templateId=${templateId}`)
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
