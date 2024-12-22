@@ -1,10 +1,7 @@
 'use client'
 import React from 'react'
 import { useAppContext } from '../context/provider'
-import ReactTimeago from 'react-timeago';
-import Image from 'next/image';
-import { navigate } from '@/app/lib/redirect';
-import Tooltip from '../general/Tooltip';
+import TemplateThumbnail from './TemplateThumbnail';
 
 
 const ExploreTemplates = () => {
@@ -16,13 +13,7 @@ const ExploreTemplates = () => {
       { templates ? (
         templates.map((template, index) => {
           return (
-            <Tooltip key={index} text={template.description}>
-            <div key={index} className='border rounded bg-slate-200 hover:bg-slate-100 p-3 h-[150px] flex flex-col items-center justify-evenly' onClick={() => navigate(`/pages/template/${template.id}`)}>
-              <Image alt='template' src={template.imageUrl} width={100} height={100}/>
-              <p>{template.title}</p>
-              <ReactTimeago date={template.createdAt}/>
-            </div>
-            </Tooltip>
+            <TemplateThumbnail key={index} template={template}  />
           )
         })
       ) : (
