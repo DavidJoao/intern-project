@@ -56,19 +56,19 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	useEffect(() => {
 		switch (question.type) {
 			case 'text':
-				setInputType(<input ref={inputRef} className="input" type="text" onChange={handleInputChange}/>)
+				setInputType(<input ref={inputRef} className="input text-black" type="text" onChange={handleInputChange}/>)
 				break;
 			case 'multi_line':
-				setInputType(<textarea ref={inputRef} className="input resize-none" type="text" onChange={handleInputChange}/>)
+				setInputType(<textarea ref={inputRef} className="input text-black resize-none" type="text" onChange={handleInputChange}/>)
 				break;
 			case 'checkbox':
-				setInputType(<input ref={inputRef} className="input" type="checkbox" onChange={(e) => {
+				setInputType(<input ref={inputRef} className="input text-black" type="checkbox" onChange={(e) => {
 					handleInputChange(e);
 					setIsChecked(e.target.checked)
 			}}/>)
 				break;
 			case 'integer':
-				setInputType(<input ref={inputRef} className="input" type="number" onChange={handleInputChange}/>)
+				setInputType(<input ref={inputRef} className="input text-black" type="number" min={0} onChange={handleInputChange}/>)
 				break;
 			default:
 				break;
@@ -94,37 +94,40 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	}
 
 	return (
-		<div ref={ref} className="flex flex-col items-start w-full p-3 gap-2 border-[1px] rounded bg-gray-100 cursor-pointer" >
+		<div ref={ref} className="flex flex-col items-start w-full p-4 gap-3 border rounded-md bg-gray-100 dark:bg-gray-800 cursor-pointer shadow-md hover:shadow-lg transition-shadow" >
 			<div className="flex items-center justify-between w-full">
-				{ isEditing ? ( <input className="input" placeholder="Title" value={newEditContent.title} onChange={(e) => setNewEditContent({...newEditContent, ['title']: e.target.value})}/> ) 
+				{ isEditing ? ( <input className="input text-black" placeholder="Title" value={newEditContent.title} onChange={(e) => setNewEditContent({...newEditContent, ['title']: e.target.value})}/> ) 
 				: 
-				( <p className="font-bold">{question.title}</p> ) }
+				( <p className="font-bold text-gray-800 dark:text-gray-200">{question.title}</p> ) }
 
 				{template?.creatorId === user?.user?.id || user?.user?.role === "admin" ? (
 					<div className="flex gap-3">
-						<button className="text-blue-500" onClick={(e) => {
+						<button className="new-theme-button" onClick={(e) => {
 							e.preventDefault();
 							setNewEditContent({ title: question?.title, description: question?.description })
 							setIsEditing(!isEditing)
 						}}> <MdModeEditOutline /> </button>
-						<button className="text-red-500" onClick={handleDelete}> <FaTrash /> </button>
+						<button className="new-theme-red-button" onClick={handleDelete}> <FaTrash /> </button>
 					</div>
 				) : (
 					<></>
 				)}
 			</div>
 
-			{ isEditing ? ( <input className="input" placeholder="Description" value={newEditContent.description} onChange={(e) => setNewEditContent({...newEditContent, ['description']: e.target.value})}/>) 
+			{ isEditing ? ( <input className="input text-black" placeholder="Description" value={newEditContent.description} onChange={(e) => setNewEditContent({...newEditContent, ['description']: e.target.value})}/>) 
 			: 
-			( <p>{question.description}</p> ) }
+			( <p className="text-gray-700 dark:text-gray-300">{question.description}</p> ) }
 			{ isEditing && (
-				<div className="flex flex-row gap-3">
-					<button type="submit" className="blue-button w-auto" onClick={handleEdit}>Edit</button>
-					<button className="blue-button w-auto" onClick={() => setIsEditing(!isEditing)}>Cancel</button>
+				<div className="flex flex-row gap-3 mt-2">
+					<button type="submit" className="new-theme-button" onClick={handleEdit}>Edit</button>
+					<button className="new-theme-gray-button" onClick={() => setIsEditing(!isEditing)}>Cancel</button>
 				</div>
 			)}
-			<label className="text-xs text-slate-400">Answer:</label>
-			{inputType} {question?.type === 'checkbox' && <p>{isChecked ? "True" : "False"}</p>}
+			<label className="text-sm text-gray-500 dark:text-gray-400 mt-3">Answer:</label>
+			<div className="text-gray-800 dark:text-gray-200">
+				{inputType} 
+				{question?.type === 'checkbox' && <p>{isChecked ? "True" : "False"}</p>}
+			</div>
 		</div>
 	)
 }
