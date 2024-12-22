@@ -11,14 +11,18 @@ import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import Like from '@/app/components/templates/Like';
 import { getQuestionsByTemplate } from '@/app/actions/questions';
 import QuestionsSection from '@/app/components/questions/QuestionsSection';
+import RoleBasedComponent from '@/app/components/general/RoleBasedComponent';
+import { useAuth } from '@/app/hooks/useAuth';
+import { CiSettings } from 'react-icons/ci';
 
 const Template = (context) => {
 
-  const { id } = context.params
+	const user = useAuth();
+  	const { id } = context.params
 
-  const [template, setTemplate] = useState(null)
-  const [comments, setComments] = useState(null)
-  const [questions, setQuestions] = useState(null)
+	const [template, setTemplate] = useState(null)
+	const [comments, setComments] = useState(null)
+	const [questions, setQuestions] = useState(null)
 
   useEffect(() => {
     const initiateTemplate = async () => {
@@ -45,7 +49,7 @@ const Template = (context) => {
   return (
 		<>
 			{template ? (
-				<div className="w-screen h-auto md:h-screen flex flex-col pt-[50px] border-[1px] border-black">
+				<div className="w-screen h-auto md:h-screen flex flex-col pt-[50px]">
 					<header className="w-full h-[20%] flex flex-row bg-center relative isolate p-3">
 						<div
 							className="absolute inset-0 bg-cover bg-center filter brightness-50 -z-10"
@@ -56,12 +60,11 @@ const Template = (context) => {
 						</div>
 
 						<div className="w-[50%] flex flex-col items-end justify-evenly">
-							<Like template={template} />
-							<Link
-								href={`/pages/template/${template.id}/forms`}
-								className="border blue-button w-auto gap-1 flex items-center">
-								Forms <IoArrowForwardCircleOutline />{" "}
-							</Link>
+							<Like template={template}/>
+							<RoleBasedComponent condition={(user) => user.role === 'admin' || template.creatorId === user.id} user={user?.user}>
+								<Link href={`/pages/template/${template.id}/forms`} className="border blue-button w-[100px] gap-1 flex items-center justify-between text-sm"> Forms <IoArrowForwardCircleOutline />{" "} </Link>
+								<Link href={`/pages/template/${template.id}/settings`} className="border blue-button w-[100px] gap-1 flex items-center justify-between text-sm"> Settings <CiSettings />{" "} </Link>
+							</RoleBasedComponent>
 						</div>
 					</header>
 
@@ -71,7 +74,9 @@ const Template = (context) => {
 						<section className="flex flex-col w-full md:w-[70%] h-auto sm:h-[70%] md:h-full p-3 border-[1px] border-slate-200 gap-2">
 							<div className="flex flex-row flex-col items-center w-auto gap-2 border-[3px] rounded p-2 lg:h-full lg:max-h-[600px] overflow-auto">
 								<QuestionsSection questions={questions} setQuestions={setQuestions} template={template} loadQuestions={loadQuestions}/>
-								<AddQuestion template={template} loadQuestions={loadQuestions} />
+								<RoleBasedComponent condition={(user) => user?.role === 'admin' || template.creatorId === user?.id} user={user?.user}>
+									<AddQuestion template={template} loadQuestions={loadQuestions} />
+								</RoleBasedComponent>
 							</div>
 						</section>
 
