@@ -48,16 +48,22 @@ const CreateTemplate = ({ userId }) => {
 
     const submitForm = async (data) => {
         try {
-            const imageUrl = await uploadImage(image);
-            if (imageUrl) {
-                data.imageUrl = imageUrl;
+            let finalUrl;
+            if (image !== null) {
+                const imageUrl = await uploadImage(image);
+                finalUrl = imageUrl;
+            } else {
+                finalUrl = 'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg'
+            }
+
+            if (finalUrl) {
+                data.imageUrl = finalUrl;
                 data.creatorId = userId;
                 const response = await createTemplate(data);
                 if (response.status === 201) {
                     await navigate(`/pages/template/${response.data.template.id}`);
                     await loadAllTemplates();
                     reset();
-
                 }
     
                 return response;
