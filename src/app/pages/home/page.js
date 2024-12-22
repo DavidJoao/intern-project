@@ -13,21 +13,21 @@ const Home = () => {
   const { t } = useTranslation('common');
 
   return (
-    <>
-    {user ? (
-        <div className='w-screen h-screen flex flex-col pt-[50px] bg-slate-200'>
-			<div className='h-[90%] flex flex-row'>
-				<div className='h-full w-full md:w-[70%] flex flex-col items-center p-3'>
-					<p className='font-bold'>{t("explore-templates")}</p>
-					<ExploreTemplates />
+		<>
+			{user ? (
+				<div className="w-screen h-screen flex flex-col pt-[50px] bg-slate-200">
+					<div className="h-[90%] flex flex-row">
+						<div className="h-full w-full md:w-[70%] flex flex-col items-center p-3">
+							<p className="font-bold">{t("explore-templates")}</p>
+							<ExploreTemplates />
+						</div>
+						<CreateTemplate userId={user.user.id} />
+					</div>
 				</div>
-				<CreateTemplate userId={user.user.id}/>
-			</div>
-        </div>
-    ) : (
-        <Loading />
-    )}
-    </>
+			) : (
+				<Loading />
+			)}
+		</>
   )
 }
 
