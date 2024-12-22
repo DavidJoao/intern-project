@@ -49,7 +49,7 @@ const Template = (context) => {
   return (
 		<>
 			{template ? (
-				<div className="w-screen h-auto md:h-screen flex flex-col pt-[50px]">
+				<div className="w-screen h-auto md:h-screen flex flex-col pt-[50px] bg-slate-200 dark:bg-gray-800 dark:text-white">
 					<header className="w-full h-[20%] flex flex-row bg-center relative isolate p-3">
 						<div
 							className="absolute inset-0 bg-cover bg-center filter brightness-50 -z-10"
@@ -72,7 +72,7 @@ const Template = (context) => {
 					<main className="w-full h-full flex flex-col md:flex-row gap-2">
 						{/* Questions */}
 						<section className="flex flex-col w-full md:w-[70%] h-auto sm:h-[70%] md:h-full p-3 border-[1px] border-slate-200 gap-2">
-							<div className="flex flex-row flex-col items-center w-auto gap-2 border-[3px] rounded p-2 lg:h-full lg:max-h-[600px] overflow-auto">
+							<div className="flex flex-col items-center w-auto gap-4 border-3 rounded-lg p-4 lg:h-full lg:max-h-[600px] overflow-auto dark:bg-gray-800 bg-white border-gray-300 dark:border-gray-600">
 								<QuestionsSection questions={questions} setQuestions={setQuestions} template={template} loadQuestions={loadQuestions}/>
 								<RoleBasedComponent condition={(user) => user?.role === 'admin' || template.creatorId === user?.id} user={user?.user}>
 									<AddQuestion template={template} loadQuestions={loadQuestions} />
@@ -81,9 +81,9 @@ const Template = (context) => {
 						</section>
 
 						{/* Comments */}
-						<section className="w-full md:w-[30%] h-[30%] md:h-full border-[1px] border-slate-200 p-3">
-							<p className="font-bold text-black text-center">Comments</p>
-							<div className="border h-[90%] max-h-[500px] flex flex-col gap-2 p-2 w-full overflow-auto">
+						<section className="w-full md:w-[30%] h-[30%] md:h-full border border-slate-200 p-3 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+							<p className="font-bold text-black text-center dark:text-white">Comments</p>
+							<div className="border h-[90%] max-h-[500px] flex flex-col gap-2 p-2 w-full overflow-auto bg-white dark:bg-gray-900 dark:border-gray-600 rounded-lg">
 								{comments ? (
 									comments.map((comment, index) => {
 										return (
@@ -91,10 +91,10 @@ const Template = (context) => {
 										)
 									})
 								) : (
-									<p>No comments available</p>
+									<p className="text-center text-gray-500 dark:text-gray-400">No comments available</p>
 								)}
 							</div>
-							<div className="border h-[10%] p-2 flex items-center justify-center">
+							<div className="border-t h-[10%] p-2 flex items-center justify-center bg-white dark:bg-gray-900 dark:border-gray-600 rounded-b-lg">
 								<CreateComment template={template} loadComments={loadComments} />
 							</div>
 						</section>
