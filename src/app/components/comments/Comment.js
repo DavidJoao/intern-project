@@ -5,6 +5,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { useAuth } from '@/app/hooks/useAuth';
 import { deleteCommentById, editCommentById } from '@/app/actions/comments';
 import { socket } from '@/app/lib/socket';
+import RoleBasedComponent from '../general/RoleBasedComponent';
 
 const Comment = ({ comment, loadComments, templateId }) => {
 
@@ -41,17 +42,13 @@ const Comment = ({ comment, loadComments, templateId }) => {
         <div className='flex items-center justify-between'>
           <p className='font-bold'>{comment.userName}</p>
           <div className='flex gap-3'>
-            { comment.userId === user?.user?.id ||  user?.user?.role === 'admin' ? (
-              <>
+            <RoleBasedComponent condition={(user) => comment?.userId === user?.id ||  user?.role === 'admin'} user={user?.user}>
               <button className='text-blue-500' onClick={() => {
                 setNewContent(comment.content)
                 setIsEditing(!isEditing)
                 }}><MdModeEditOutline/></button>
               <button className='text-red-500' onClick={handleDeleteComment}><FaTrash/></button>
-              </>
-            ) : (
-              <></>
-            )}
+            </RoleBasedComponent>
           </div>
         </div>
         { isEditing ? (
