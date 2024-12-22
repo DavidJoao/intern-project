@@ -36,7 +36,7 @@ const Like = ({ template }) => {
         { isLoading ? (
             <Loading />
         ) : (
-            <button className='border blue-button w-auto gap-1 flex items-center' onClick={handleLikeTemplate}>{likeData.isLiked ? "Dislike" : "Like"} {likeData.isLiked ? <FcDislike/> : <FcLike/>} ({likeData.likes})</button>
+            <button className='border blue-button w-[100px] gap-1 flex items-center justify-between text-sm' onClick={handleLikeTemplate}>{likeData.isLiked ? "Dislike" : "Like"} {likeData.isLiked ? <FcDislike/> : <FcLike/>} ({likeData.likes})</button>
         ) }
         </>
   )
