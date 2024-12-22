@@ -38,29 +38,29 @@ const Comment = ({ comment, loadComments, templateId }) => {
   }
 
   return (
-    <div className='border rounded bg-slate-100 pl-2 pr-2'>
+    <div className="border rounded-lg bg-slate-100 dark:bg-gray-800 p-3 shadow-sm">
         <div className='flex items-center justify-between'>
-          <p className='font-bold'>{comment.userName}</p>
+          <p className="font-bold text-gray-800 dark:text-gray-200">{comment.userName}</p>
           <div className='flex gap-3'>
             <RoleBasedComponent condition={(user) => comment?.userId === user?.id ||  user?.role === 'admin'} user={user?.user}>
-              <button className='text-blue-500' onClick={() => {
+              <button className='new-theme-button' onClick={() => {
                 setNewContent(comment.content)
                 setIsEditing(!isEditing)
                 }}><MdModeEditOutline/></button>
-              <button className='text-red-500' onClick={handleDeleteComment}><FaTrash/></button>
+              <button className='text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors' onClick={handleDeleteComment}><FaTrash/></button>
             </RoleBasedComponent>
           </div>
         </div>
         { isEditing ? (
           <div className='flex flex-row gap-2'>
             <input className='input' value={newContent} onChange={(e) => setNewContent(e.target.value)}/>
-            <button className='blue-button w-auto' onClick={handleEditComment}>Edit</button>
-            <button className='blue-button w-auto' onClick={() => setIsEditing(false)}>Cancel</button>
+            <button className='new-theme-button' onClick={handleEditComment}>Edit</button>
+            <button className='new-theme-gray-button' onClick={() => setIsEditing(false)}>Cancel</button>
           </div>
         ) : (
-          <p>{comment.content}</p>
+          <p className="text-gray-700 dark:text-gray-300">{comment.content}</p>
         ) }
-        <ReactTimeago className="text-slate-400 text-xs" date={comment.createdAt} />
+        <ReactTimeago className="text-xs text-gray-500 dark:text-gray-400 mt-2"  date={comment.createdAt} />
     </div>
   )
 }
