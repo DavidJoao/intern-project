@@ -45,6 +45,7 @@ model Template {
   creatorId   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  order       Int      
 
   creator     User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   questions   Question[]
