@@ -20,16 +20,16 @@ const Navbar = ({ session }) => {
 
     return (
         <>
-            <div className='w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed shadow-lg dark:text-white'>
+            <div className="w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed top-0 left-0 z-50 shadow-lg bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">
                 {session ? (
                     <>
-                    <button className='flex flex-col items-center text-md' onClick={() => logoutUser()}><CiLogout/>Logout</button>
-                    <Link className='flex flex-col items-center text-md' href={'/pages/profile'}><CiUser /> Profile</Link>
-                    <Link className='flex flex-col items-center text-md' href={'/pages/home'}><MdOutlineDashboard />Dashboard</Link>
-                    <Link className='flex flex-col items-center text-md' href={'/pages/settings'}><CiSettings /> Settings</Link>
-                    <div className='flex flex-col items-center text-md'>
+                    <button className='nav-button' onClick={() => logoutUser()}><CiLogout/>Logout</button>
+                    <Link className='nav-button' href={'/pages/profile'}><CiUser /> Profile</Link>
+                    <Link className='nav-button' href={'/pages/home'}><MdOutlineDashboard />Dashboard</Link>
+                    <Link className='nav-button' href={'/pages/settings'}><CiSettings /> Settings</Link>
+                    <div className='nav-button'>
                         <MdLanguage />
-                        <select className='bg-none text-black bg-slate-100/0 rounded' onChange={(e) => changeLanguage(e.target.value)}>
+                        <select className="bg-transparent text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 p-1 focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-700" onChange={(e) => changeLanguage(e.target.value)}>
                             <option value={'en'}>EN</option>
                             <option value={'es'}>ES</option>
                         </select>
@@ -46,9 +46,9 @@ const Navbar = ({ session }) => {
                 </>
                 ) : (
                     <>
-                    <div className='flex flex-col items-center text-md'>
+                    <div className='nav-button'>
                         <MdLanguage />
-                        <select className='bg-none text-black bg-slate' onChange={(e) => changeLanguage(e.target.value)}>
+                        <select className="bg-transparent text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 p-1 focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-700" onChange={(e) => changeLanguage(e.target.value)}>
                             <option value={'en'}>EN</option>
                             <option value={'es'}>ES</option>
                         </select>
