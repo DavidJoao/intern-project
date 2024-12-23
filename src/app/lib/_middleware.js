@@ -12,7 +12,7 @@ export default async function middleware(req) {
     return NextResponse.redirect('/');
   }
 
-  if (session && (pathname === '/pages/login' || pathname === '/pages/signup')) {
+  if (session && (pathname === '/pages/login' || pathname === '/pages/signup' || pathname === '/pages/templates')) {
     return NextResponse.redirect('/pages/home');
   }
 
