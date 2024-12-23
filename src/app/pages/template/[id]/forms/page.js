@@ -41,7 +41,7 @@ const Forms = (context) => {
     return (
     <>
     { forms ? (
-    <div className='general-bg flex flex-col gap-5 pt-[50px] p-5'>
+    <div className='general-bg flex flex-col gap-5 pt-[50px] p-5 min-h-screen'>
         { forms && forms.map((form, index) => {
             return (
                 <Form key={index} form={form} getForms={getForms} />
