@@ -115,3 +115,13 @@ export const deleteTemplateById = async (templateId) => {
         return error
     }
 }
+
+export const fetchTopTemplates = async () => {
+    try {
+        const response = await axios.get('/api/templates/topTemplates')
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error;
+    }
+}
