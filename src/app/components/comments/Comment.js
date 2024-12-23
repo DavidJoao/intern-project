@@ -38,7 +38,7 @@ const Comment = ({ comment, loadComments, templateId }) => {
   }
 
   return (
-    <div className="border rounded-lg bg-slate-100 dark:bg-gray-800 p-3 shadow-sm">
+    <div className="border dark:border-gray-700 rounded-lg bg-slate-100 dark:bg-gray-800 p-3 shadow-sm">
         <div className='flex items-center justify-between'>
           <p className="font-bold text-gray-800 dark:text-gray-200">{comment.userName}</p>
           <div className='flex gap-3'>
