@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
 @layer utilities {
@@ -50,12 +51,15 @@ body {
     @apply border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 p-4 rounded-lg shadow-lg
   }
   .new-theme-button{
-    @apply flex items-center justify-center w-auto p-2 rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700 transition-all
+    @apply flex items-center justify-center w-auto p-2 rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700 transition-all z-[100]
   }
   .new-theme-gray-button{
     @apply px-4 py-2 rounded-md text-white bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 transition-all
   }
   .new-theme-red-button{
     @apply text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors
+  }
+  .dark-input{
+    @apply input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600
   }
 }
