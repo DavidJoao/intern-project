@@ -74,12 +74,13 @@ const CreateTemplate = ({ userId }) => {
     }
 
   return (
-    <div className='h-full w-[30%] hidden md:flex flex-col items-center p-3'>
-        <p className='font-bold'>{t("create-template")}</p>
-        <form className='border-[3px] border-slate-200 w-full h-full p-3 rounded shadow-lg bg-white' onSubmit={handleSubmit(submitForm)}>
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>Topic</p>
-                <select className='input w-full' onChange={(e) => setValue("topic", e.target.value)}>
+    <div className="h-full w-full md:w-[25%] flex flex-col items-center p-3 flex-grow">
+        <p className='font-bold text-center text-lg dark:text-white'>{t("create-template")}</p>
+        <form id='create-template' className="border-2 border-slate-200 dark:border-gray-600 w-full h-auto md:min-h-[550px] max-w-lg p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 grid gap-4" onSubmit={handleSubmit(submitForm)}>
+            
+            <div className="flex flex-col">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Topic</p>
+                <select className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 p-2" onChange={(e) => setValue("topic", e.target.value)}>
                     <option>Choose Topic</option>
                     { topics?.map((topic, index) => {
                         return (
@@ -89,37 +90,36 @@ const CreateTemplate = ({ userId }) => {
                 </select>
             </div>
             
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>Other Topic</p>
-                <input className='input w-full' {...register("topic")}  onChange={(e) => setValue("topic", e.target.value)}/>
+            <div className="flex flex-col">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Other Topic</p>
+                <input required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" {...register("topic")}  onChange={(e) => setValue("topic", e.target.value)}/>
             </div>
                     
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>Name</p>
-                <input required className='input w-full' {...register("name", { required: true })}/>
+            <div className="flex flex-col">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Name</p>
+                <input required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" {...register("name", { required: true })}/>
             </div>
 
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>Description</p>
-                <textarea required className='input w-full resize-none' {...register("description", { required: true })}/>
+            <div className="flex flex-col">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Description</p>
+                <textarea required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 resize-none" {...register("description", { required: true })}/>
             </div>
 
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>Image</p>
-                <input type='file' className='input w-full' onChange={handleImageUpload}/>
+            <div className="flex flex-col">
+                <p className="text-sm text-gray-600 dark:text-gray-300">Image</p>
+                <input type='file' className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" onChange={handleImageUpload}/>
             </div>
 
-            <div className='p-2 flex items-center justify-center'>
+            <div className="flex flex-col">
                 {image ? (
                     <Image alt='image' src={image} width={150} height={150}/>
                 ) : <></>}
             </div>
 
-            <div className='p-2'>
-                <p className='text-xs text-gray-400'>After creating your template with this initial configuration you will be able to add queestions, tags and change the image.</p>
+            <div className='p-2 flex flex-col'>
+                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">After creating your template with this initial configuration you will be able to add questions, tags and change the image.</p>
+                <button className="new-theme-button mx-auto" type='submit'>Post and go to Template</button>
             </div>
-
-            <button className="blue-button w-full" type='submit'>Post and go to Template</button>
         </form>
     </div>
   )

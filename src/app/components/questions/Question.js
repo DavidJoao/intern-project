@@ -56,19 +56,19 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	useEffect(() => {
 		switch (question.type) {
 			case 'text':
-				setInputType(<input ref={inputRef} className="input text-black" type="text" onChange={handleInputChange}/>)
+				setInputType(<input ref={inputRef} className="dark-input text-black" type="text" onChange={handleInputChange}/>)
 				break;
 			case 'multi_line':
-				setInputType(<textarea ref={inputRef} className="input text-black resize-none" type="text" onChange={handleInputChange}/>)
+				setInputType(<textarea ref={inputRef} className="dark-input text-black resize-none" type="text" onChange={handleInputChange}/>)
 				break;
 			case 'checkbox':
-				setInputType(<input ref={inputRef} className="input text-black" type="checkbox" onChange={(e) => {
+				setInputType(<input ref={inputRef} className="dark-input text-black" type="checkbox" onChange={(e) => {
 					handleInputChange(e);
 					setIsChecked(e.target.checked)
 			}}/>)
 				break;
 			case 'integer':
-				setInputType(<input ref={inputRef} className="input text-black" type="number" min={0} onChange={handleInputChange}/>)
+				setInputType(<input ref={inputRef} className="dark-input text-black" type="number" min={0} onChange={handleInputChange}/>)
 				break;
 			default:
 				break;
@@ -94,7 +94,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	}
 
 	return (
-		<div ref={ref} className="flex flex-col items-start w-full p-4 gap-3 border rounded-md bg-gray-100 dark:bg-gray-800 cursor-pointer shadow-md hover:shadow-lg transition-shadow" >
+		<div ref={ref} className="flex flex-col items-start w-full p-4 gap-3 border dark:border-gray-700 rounded-md bg-gray-100 dark:bg-gray-900 cursor-pointer shadow-md hover:shadow-lg transition-shadow" >
 			<div className="flex items-center justify-between w-full">
 				{ isEditing ? ( <input className="input text-black" placeholder="Title" value={newEditContent.title} onChange={(e) => setNewEditContent({...newEditContent, ['title']: e.target.value})}/> ) 
 				: 

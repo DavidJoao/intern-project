@@ -67,7 +67,7 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions }) 
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <form className="flex flex-col w-full p-4 border-[1px] border-slate-200 gap-4" onSubmit={handleSubmitForm}>
+      <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
         {questions?.length > 0 ? (
           questions.map((question, index) => (
             <Question key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger}/>
