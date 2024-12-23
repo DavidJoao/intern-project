@@ -25,7 +25,7 @@ const AddQuestion = ({ template, loadQuestions }) => {
         <form className='p-1 flex flex-col gap-1 w-[250px]' onSubmit={handleSubmit(submitForm)}>
             <label className='font-bold text-center'>Add Question</label>
             <label className='font-bold'>Question Type</label>
-            <select className='input' onChange={(e) => {
+            <select className='dark-input' onChange={(e) => {
                 setSelection(e.target.value)
                 setValue("type", e.target.value)
                 }}>
@@ -36,9 +36,9 @@ const AddQuestion = ({ template, loadQuestions }) => {
                 <option value="integer">Number</option>
             </select>
             <label className='font-bold'>Question Title:</label>
-            <input required className='input' {...register("title")}/>
+            <input required className='dark-input' {...register("title")}/>
             <label className='font-bold'>Description:</label>
-            <textarea required className='input resize-none' {...register("description")} />
+            <textarea required className='dark-input resize-none' {...register("description")} />
             <div className='flex flex-row gap-2 justify-evenly'>
                 <label className='font-bold'>Display In Form?</label>
                 <input type='checkbox' defaultChecked={true} onChange={(e) => setIsDisplayed(e.target.checked)} {...register("displayInResults")}/>
