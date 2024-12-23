@@ -50,8 +50,8 @@ const Profile = () => {
 	return (
     <> {user && templates ? 
     <DndProvider backend={HTML5Backend}>
-    <div className='border-[1px] border-black pt-[50px] w-screen h-screen'>
-        <div className='border-[1px] border-red-500 p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2'>
+    <div className='border-[1px] border-black pt-[50px] w-screen h-auto min-h-screen dark:bg-gray-700'>
+        <div className='p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 w-full'>
         { templates?.map((template, index) => {
             return (
                 <DraggableTemplate key={index} template={template} index={index} moveTemplate={moveTemplate}/>
