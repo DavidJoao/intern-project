@@ -38,7 +38,7 @@ const CreateComment = ({ template, loadComments }) => {
     
     return (
     <form className="flex flex-row items-center justify-center gap-2 p-2 border-gray-200 dark:border-gray-600 rounded-b-lg" onSubmit={handleSubmit(postComment)}>
-        <input required className='input resize-none' placeholder='Post a comment...' {...register("content")} />
+        <input required className='dark-input resize-none' placeholder='Post a comment...' {...register("content")} />
         <button type='submit' className="new-theme-button"><IoArrowForwardCircleOutline/></button>
     </form>
   )
