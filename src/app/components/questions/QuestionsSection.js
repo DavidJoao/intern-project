@@ -5,8 +5,10 @@ import Question from "./Question";
 import { updateOrder } from "@/app/actions/questions";
 import { createForm } from "@/app/actions/forms";
 import { useAuth } from "@/app/hooks/useAuth";
+import NonAuthQuestion from "./NonAuthQuestion";
+import Link from "next/link";
 
-const QuestionsSection = ({ questions, setQuestions, template, loadQuestions }) => {
+const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, session }) => {
 
   const user = useAuth();
 
@@ -66,19 +68,39 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions }) 
   }
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
-        {questions?.length > 0 ? (
-          questions.map((question, index) => (
-            <Question key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger}/>
-          ))
-        ) : (
-          <p className="text-center">No questions at the moment</p>
-        )}
-        <button className="blue-button h-auto mx-auto" type="submit">Send Form</button>
-        <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
-      </form>
-    </DndProvider>
+    <>
+    { session ? (
+      <DndProvider backend={HTML5Backend}>
+        <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
+          {questions?.length > 0 ? (
+            questions.map((question, index) => (
+              <Question key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger} session={session}/>
+            ))
+          ) : (
+            <p className="text-center">No questions at the moment</p>
+          )}
+          <button className="blue-button h-auto mx-auto" type="submit">Send Form</button>
+          <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
+        </form>
+      </DndProvider>
+    ) : (
+      <div>
+        <Link className='new-theme-button' href={'/pages/login'}>Login</Link>
+        <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
+          {questions?.length > 0 ? (
+            questions.map((question, index) => (
+              <NonAuthQuestion key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger} session={session}/>
+            ))
+          ) : (
+            <p className="text-center">No questions at the moment</p>
+          )}
+
+          {session && <button className="blue-button h-auto mx-auto" type="submit">Send Form</button> }
+          <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
+        </form>
+      </div>
+    )}
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ import { deleteCommentById, editCommentById } from '@/app/actions/comments';
 import { socket } from '@/app/lib/socket';
 import RoleBasedComponent from '../general/RoleBasedComponent';
 
-const Comment = ({ comment, loadComments, templateId }) => {
+const Comment = ({ comment, loadComments, templateId, session }) => {
 
   const user = useAuth();
 
@@ -42,6 +42,7 @@ const Comment = ({ comment, loadComments, templateId }) => {
         <div className='flex items-center justify-between'>
           <p className="font-bold text-gray-800 dark:text-gray-200">{comment.userName}</p>
           <div className='flex gap-3'>
+            { session &&
             <RoleBasedComponent condition={(user) => comment?.userId === user?.id ||  user?.role === 'admin'} user={user?.user}>
               <button className='new-theme-button' onClick={() => {
                 setNewContent(comment.content)
@@ -49,6 +50,7 @@ const Comment = ({ comment, loadComments, templateId }) => {
                 }}><MdModeEditOutline/></button>
               <button className='text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors' onClick={handleDeleteComment}><FaTrash/></button>
             </RoleBasedComponent>
+            }
           </div>
         </div>
         { isEditing ? (

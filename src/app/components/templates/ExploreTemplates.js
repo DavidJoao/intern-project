@@ -17,7 +17,6 @@ const ExploreTemplates = () => {
 
 	const loadTopTemplates = async () => {
 		const { data } = await fetchTopTemplates()
-        console.log(data)
 		setTopTemplates(data.topTemplates)
 	}
 

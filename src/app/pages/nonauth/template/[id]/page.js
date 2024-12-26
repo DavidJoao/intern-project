@@ -19,25 +19,12 @@ import { navigate } from '@/app/lib/redirect';
 
 const Template = (context) => {
 
-	const user = useAuth();
   	const { id } = context.params
 
 	const [template, setTemplate] = useState(null)
 	const [comments, setComments] = useState(null)
 	const [questions, setQuestions] = useState(null)
 	const [session, setSession] = useState(null)
-
-	useEffect(() => {
-	  const fetchSession = async () => {
-		  const session = await logSession();
-		  if (session) {
-			  setSession(session)
-			} else {
-			  navigate(`/pages/nonauth/template/${id}`)
-		  }
-	  }
-	  fetchSession();
-	}, [])
 
   useEffect(() => {
     const initiateTemplate = async () => {
@@ -63,7 +50,7 @@ const Template = (context) => {
 
   return (
 		<>
-			{template && user ? (
+			{template ? (
 				<div className="w-screen min-h-screen h-auto flex flex-col pt-[50px] bg-slate-200 dark:bg-gray-800 dark:text-white">
 					<header className="w-full h-[20%] flex flex-row bg-center relative isolate p-3">
 						<div
@@ -73,14 +60,6 @@ const Template = (context) => {
 							<h1 className="font-bold text-3xl text-white ">{template.title}</h1>
 							<p className="text-white text-sm">{template.description}</p>
 						</div>
-
-						<div className="w-[50%] flex flex-col items-end justify-evenly gap-3">
-							<Like template={template}/>
-							<RoleBasedComponent condition={(user) => user.role === 'admin' || template.creatorId === user.id} user={user?.user}>
-								<Link href={`/pages/template/${template.id}/forms`} className="new-theme-button w-[100px]"> Forms <IoArrowForwardCircleOutline />{" "} </Link>
-								<Link href={`/pages/template/${template.id}/settings`} className="new-theme-button w-[100px]"> Settings <CiSettings />{" "} </Link>
-							</RoleBasedComponent>
-						</div>
 					</header>
 
 					{/* MAIN CONTAINER */}
@@ -89,9 +68,6 @@ const Template = (context) => {
 						<section className="flex flex-col w-full md:w-[70%] h-auto sm:h-[70%] md:h-full p-3 border-[1px] border-slate-200 dark:border-gray-700 rounded-lg gap-2">
 							<div className="flex flex-col items-center w-auto gap-4 border-3 rounded-lg p-4 lg:h-full lg:max-h-[600px] overflow-auto dark:bg-gray-800 bg-white border-gray-300 dark:border-gray-600">
 								<QuestionsSection questions={questions} setQuestions={setQuestions} template={template} loadQuestions={loadQuestions} session={session}/>
-								<RoleBasedComponent condition={(user) => user?.role === 'admin' || template.creatorId === user?.id} user={user?.user}>
-									<AddQuestion template={template} loadQuestions={loadQuestions} />
-								</RoleBasedComponent>
 							</div>
 						</section>
 
@@ -108,9 +84,6 @@ const Template = (context) => {
 								) : (
 									<p className="text-center text-gray-500 dark:text-gray-400">No comments available</p>
 								)}
-							</div>
-							<div className="border-t h-[10%] p-2 flex items-center justify-center bg-white dark:bg-gray-900 dark:border-gray-600 rounded-b-lg">
-								<CreateComment template={template} loadComments={loadComments} />
 							</div>
 						</section>
 					</main>

@@ -1,18 +1,20 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { logoutUser } from '@/app/actions/session'
 import Link from 'next/link'
 import { useTranslation } from "react-i18next";
 import { useAppContext } from '../context/provider';
-import { CiLogout, CiUser, CiSettings, CiLight, CiSun } from "react-icons/ci";
+import { CiLogout, CiUser, CiSettings, CiLight, CiSun, CiMenuBurger } from "react-icons/ci";
 import { MdOutlineDashboard, MdLanguage } from "react-icons/md";
 import { GoMoon } from "react-icons/go";
 import { icons } from '@/app/lib/icons';
+import MobileNavMenu from './MobileNavMenu';
 
 const Navbar = ({ session }) => {
 
     const { toggleTheme, theme } = useAppContext()
     const { t, i18n } = useTranslation('common');
+    const [isOpen, setIsOpen] = useState(false)
 
     const changeLanguage = async (lng) => {
         await i18n.changeLanguage(lng);
@@ -20,7 +22,7 @@ const Navbar = ({ session }) => {
 
     return (
         <>
-            <div className="w-screen h-[50px] flex flex-row-reverse items-center p-3 gap-3 fixed top-0 left-0 z-[101] shadow-lg bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">
+            <div className="w-screen h-[50px] hidden md:flex flex-row-reverse items-center p-3 gap-3 fixed top-0 left-0 z-[101] shadow-lg bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">
                 {session ? (
                     <>
                     <button className='nav-button' onClick={() => logoutUser()}><CiLogout/>Logout</button>
@@ -61,6 +63,16 @@ const Navbar = ({ session }) => {
                     </>
             )}
             </div>
+            <div className='flex items-center justify-center md:hidden w-full fixed top-0 z-[101] bg-white dark:bg-gray-900'>
+                <button className='theme-button w-full' onClick={() => setIsOpen(!isOpen)}><CiMenuBurger className='mx-auto'/></button>
+                { session && <Link href={'#create-template'} className='theme-button w-full text-xs text-center'>Create Template</Link> }
+                { theme === 'dark' ? (
+                        <button className="theme-button text-center" onClick={() => toggleTheme()}><CiLight className='mx-auto'/></button>
+                    ) : (
+                        <button className="theme-button text-center" onClick={() => toggleTheme()}><GoMoon className='mx-auto'/></button>
+                    ) }
+            </div>
+            <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} session={session}/>
         </>
   )
 }

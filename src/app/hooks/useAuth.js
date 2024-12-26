@@ -12,10 +12,6 @@ export const useAuth = () => {
             try {
                 const userSession = await logSession();
                 setSession(userSession);
-
-                if (!userSession){
-                    router.push('/pages/login')
-                }
             } catch (error) {
                 console.error("Error Fetching Session", error)
             }
