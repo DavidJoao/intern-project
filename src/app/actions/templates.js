@@ -66,9 +66,9 @@ export const getTemplateById = async (templateId) => {
     }
 }
 
-export const fetchTemplates = async () => {
+export const fetchTemplates = async (user) => {
     try {
-        const response = await axios.get('/api/templates/all');
+        const response = await axios.get(`/api/templates/all?userId=${user.id}`);
         return response;
     } catch (error) {
         console.log(error)
@@ -133,5 +133,35 @@ export const searchTemplateAPI = async (query) => {
     } catch (error) {
         console.log(error)
         return error;
+    }
+}
+
+export const addAllowedUserAPI = async (userEmail, templateId) => {
+    try {
+        const response = await axios.patch(`/api/templates/addAllowedUser?userEmail=${userEmail}&templateId=${templateId}`)
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error
+    }
+}
+
+export const removeAllowedUserAPI = async (userEmail, templateId) => {
+    try {
+        const response = await axios.patch(`/api/templates/deleteAllowedUser?userEmail=${userEmail}&templateId=${templateId}`)
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error
+    }
+}
+
+export const getMatchingEmailsAPI = async (query) => {
+    try {
+        const response = await axios.get(`/api/user/getMatchingEmails?query=${query}`)
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error
     }
 }
