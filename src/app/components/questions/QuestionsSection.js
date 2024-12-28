@@ -18,6 +18,15 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
   const [errorMessage, setErrorMessage] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
   const [formResetTrigger, setFormResetTrigger] = useState(0);
+  const [sendCopy, setSendCopy] = useState(false)
+
+  const emailData = {
+    userEmail: user?.user?.email,
+    templateTitle: template?.title,
+    templateDescription: template?.description,
+    templateImage: template?.imageUrl,
+    answers: answers
+  }
 
   const moveQuestion = useCallback((dragIndex, hoverIndex) => {
     const updatedQuestions = [...questions];
@@ -69,29 +78,21 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
     if (answers?.length < questions?.length) {
       setErrorMessage(t("must-answer"))
     } else {
-      const response = await createForm(user?.user?.id, template?.id, answers);
-      console.log(response)
+
+      if (sendCopy === true) sendEmail();
+
+      await createForm(user?.user?.id, template?.id, answers);
       setAnswers([])
       setErrorMessage("")
       setFormResetTrigger((prev) => prev + 1);
     }
   }
 
-  const sendEmail = async (e) => {
-    e.preventDefault();
-    const emailData = {
-      userEmail: user?.user?.email,
-      templateTitle: template?.title,
-      templateDescription: template?.description,
-      templateImage: template?.imageUrl,
-      answers: answers
-    }
-
-    const response = await sendFormThroughEmail(emailData)
-    if (response.status === 200) {
+  const sendEmail = async () => {
+    const emailResponse = await sendFormThroughEmail(emailData)
+    if (emailResponse.status === 200) {
       setSuccessMessage(t("email-success"))
       setTimeout(async () => {
-        await handleSubmitForm(e)
         setSuccessMessage("")
       }, 3000)
     }
@@ -110,14 +111,11 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
           ) : (
             <p className="text-center">{t("no-questions")}</p>
           )}
-          { answers?.length !== questions?.length ? (
-            <p className="mx-auto text-center">{t("must-answer")}</p>
-          ) : (
-            <>
+            <div className="flex flex-row gap-2 mx-auto">
+              <p>Send Copy To Email? {sendCopy.toString()}</p>
+              <input type="checkbox" checked={sendCopy} value={sendCopy} onChange={(e) => setSendCopy(e.target.checked)}/>
+            </div>
             <button className="blue-button h-auto mx-auto" type="submit">{t("send-form")}</button>
-            <button className="blue-button h-auto mx-auto" onClick={(e) => sendEmail(e)}>{t("send-form-copy")}</button>
-            </>
-          ) }
           <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
           <p className="text-green-500 font-bold mx-auto text-center">{successMessage}</p>
         </form>
