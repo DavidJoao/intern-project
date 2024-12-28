@@ -3,7 +3,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import React, { useCallback, useState } from "react";
 import Question from "./Question";
 import { updateOrder } from "@/app/actions/questions";
-import { createForm } from "@/app/actions/forms";
+import { createForm, sendFormThroughEmail } from "@/app/actions/forms";
 import { useAuth } from "@/app/hooks/useAuth";
 import NonAuthQuestion from "./NonAuthQuestion";
 import Link from "next/link";
@@ -14,6 +14,7 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
 
   const [answers, setAnswers] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
   const [formResetTrigger, setFormResetTrigger] = useState(0);
 
   const moveQuestion = useCallback((dragIndex, hoverIndex) => {
@@ -31,11 +32,18 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
       order: index,
     }));
 
-    try {
-      await updateOrder(template?.id, { questions: orderedQuestions })
-    } catch (error) {
-      console.log(error)
-      console.error("Error updating order:", error);
+    if (user?.user?.role === 'admin' || template.creatorId === user?.user?.id) {
+      try {
+        await updateOrder(template?.id, { questions: orderedQuestions })
+      } catch (error) {
+        console.log(error)
+        console.error("Error updating order:", error);
+      }
+    } else {
+      setErrorMessage("User Not Allowed To Perform Action (Changes will not be saved)")
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 2000)
     }
   };
 
@@ -67,11 +75,32 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
     }
   }
 
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    const emailData = {
+      userEmail: user?.user?.email,
+      templateTitle: template?.title,
+      templateDescription: template?.description,
+      templateImage: template?.imageUrl,
+      answers: answers
+    }
+
+    const response = await sendFormThroughEmail(emailData)
+    if (response.status === 200) {
+      setSuccessMessage("Email Sent Successfully! Remember to check your Spam Folder. Please Wait...")
+      setTimeout(async () => {
+        await handleSubmitForm(e)
+        setSuccessMessage("")
+      }, 3000)
+    }
+  }
+
   return (
     <>
     { session ? (
       <DndProvider backend={HTML5Backend}>
         <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
+        <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
           {questions?.length > 0 ? (
             questions.map((question, index) => (
               <Question key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger} session={session}/>
@@ -79,8 +108,16 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
           ) : (
             <p className="text-center">No questions at the moment</p>
           )}
-          <button className="blue-button h-auto mx-auto" type="submit">Send Form</button>
+          { answers?.length !== questions?.length ? (
+            <p className="mx-auto text-center">Must Answer All Questions to Submit</p>
+          ) : (
+            <>
+            <button className="blue-button h-auto mx-auto" type="submit">Send Form</button>
+            <button className="blue-button h-auto mx-auto" onClick={(e) => sendEmail(e)}>Send Form & Email Me A Copy</button>
+            </>
+          ) }
           <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
+          <p className="text-green-500 font-bold mx-auto text-center">{successMessage}</p>
         </form>
       </DndProvider>
     ) : (
