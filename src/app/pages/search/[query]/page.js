@@ -20,7 +20,7 @@ const SearchQuery = (context) => {
 
     return (
     <div className='pt-[50px] min-h-screen general-bg p-3 h-auto'>
-        <p>Showing Results for: "{query}"</p>
+        <p>Showing Results for: {query}</p>
         <div className=' grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 p-3'>
         { templates ? (
             <>
