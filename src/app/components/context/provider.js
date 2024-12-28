@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next';
 import i18next from '../../lib/i18n';
 import { fetchTemplates } from '@/app/actions/templates';
+import { logSession } from '@/app/actions/session';
 
 const AppContext = createContext();
 
@@ -14,8 +15,8 @@ const Provider = ( { children } ) => {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
-      loadAllTemplates()
-    }, [])
+        loadAllTemplates();
+  }, []);
 
     useEffect(() => {
       const savedTheme = localStorage.getItem('theme');
@@ -38,8 +39,11 @@ const Provider = ( { children } ) => {
     };
 
     const loadAllTemplates = async () => {
-      const { data } = await fetchTemplates();
-      setTemplates(data?.templates)
+      const session = await logSession();
+      if (session.user) {
+        const { data } = await fetchTemplates(session?.user);
+        setTemplates(data?.templates || []);
+      }
     }
 
     return (
