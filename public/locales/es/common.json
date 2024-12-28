@@ -60,5 +60,9 @@
     "loading-templates": "Cargando plantillas...",
     "all-templates": "Todas las plantillas",
     "by": "por",
-    "question": "Pregunta"
+    "question": "Pregunta",
+    "submit-changes": "Enviar cambios",
+    "public": "Publico",
+    "goto-template": "Ir a la plantilla",
+    "allowed-users":"Usuarios permitidos"
   }

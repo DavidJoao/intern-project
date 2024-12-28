@@ -60,5 +60,9 @@
     "loading-templates": "Loading templates...",
     "all-templates":"All templates",
     "by": "by",
-    "question": "Question"
+    "question": "Question",
+    "submit-changes": "Submit changes",
+    "public": "Public",
+    "goto-template": "Go to template",
+    "allowed-users": "Allowed Users"
 }
