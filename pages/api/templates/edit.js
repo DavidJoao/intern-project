@@ -9,7 +9,8 @@ export default async function PATCH(req, res) {
             data: { 
                 title: form.title,
                 description: form.description,
-                topic: form.topic
+                topic: form.topic,
+                isPublic: form.isPublic
             }
         })
         res.status(201).json({ updatedTemplate: foundTemplate })
