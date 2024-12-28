@@ -6,7 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import { deleteQuestionById, editQuestionById } from "@/app/actions/questions";
 import { useTranslation } from "react-i18next";
 
-const Question = ({ question, index, moveQuestion, template, loadQuestions, handleAnswerChange, formResetTrigger }) => {
+const Question = ({ question, index, moveQuestion, template, loadQuestions, handleAnswerChange, formResetTrigger, setAnswers }) => {
 
 	const initialEdit = {
 		title: question?.title,
@@ -42,18 +42,29 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 		},
 	})
 
+	useEffect(() => {
+		setAnswers((prevAnswers) => {
+			const existingAnswers = [...prevAnswers];
+			const existingAnswerIds = existingAnswers.map((answer) => answer.id);
+	
+			if (!existingAnswerIds.includes(question.id)) {
+				existingAnswers.push({
+					id: question.id,
+					value: question.type === "checkbox" ? !!question.value : question.value || "",
+				});
+			}
+	
+			return existingAnswers;
+		});
+	}, [question.id, question.type, question.value]);
+
 	drag(drop(ref))
 
 	useEffect(() => {
-		if (inputRef.current) {
-			if (question?.type === "checkbox") {
-				inputRef.current.checked = false;
-				setIsChecked(false);
-			} else {
-				inputRef.current.value = "";
-			}
+		if (question.type === "checkbox") {
+			setIsChecked(!!question.value);
 		}
-	}, [formResetTrigger]);
+	}, [question.type, question.value, formResetTrigger]);
 
 	useEffect(() => {
 		switch (question.type) {
@@ -64,10 +75,11 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 				setInputType(<textarea ref={inputRef} className="dark-input text-black resize-none" type="text" onChange={handleInputChange}/>)
 				break;
 			case 'checkbox':
-				setInputType(<input ref={inputRef} className="dark-input text-black" type="checkbox" onChange={(e) => {
-					handleInputChange(e);
-					setIsChecked(e.target.checked)
-			}}/>)
+				setInputType(<input ref={inputRef} checked={isChecked} className="dark-input text-black" type="checkbox" onChange={(e) => {
+                        const newValue = e.target.checked;
+                        setIsChecked(newValue);
+                        handleAnswerChange(question.id, newValue); 
+                    }}/>)
 				break;
 			case 'integer':
 				setInputType(<input ref={inputRef} className="dark-input text-black" type="number" min={0} onChange={handleInputChange}/>)
@@ -75,10 +87,11 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 			default:
 				break;
 		}
-	}, [])
+	}, [isChecked])
 
 	const handleInputChange = (event) => {
 		const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
+		event.target.type === "checkbox" && setIsChecked(event.target.checked)
 		handleAnswerChange(question.id, value);
 	  };
 
