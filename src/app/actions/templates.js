@@ -125,3 +125,13 @@ export const fetchTopTemplates = async () => {
         return error;
     }
 }
+
+export const searchTemplateAPI = async (query) => {
+    try {
+        const response = await axios.get(`/api/templates/search?search=${query}`);
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error;
+    }
+}
