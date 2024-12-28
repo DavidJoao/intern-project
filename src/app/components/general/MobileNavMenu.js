@@ -19,10 +19,10 @@ const MobileNavMenu = ({ setIsOpen, isOpen, session}) => {
         <>
         { session ? (
             <div className={`pt-[50px] p-3 ${ isOpen === true ? 'flex' : 'hidden' } md:hidden flex-col gap-2 items-center justify-center bg-white dark:bg-gray-800`}>
-                <button className="nav-button border-b w-full p-2" onClick={() => logoutUser()}> <CiLogout />Logout </button>
-                <Link className="nav-button border-b w-full p-2" href={"/pages/profile"}> <CiUser /> Profile </Link>
-                <Link className="nav-button border-b w-full p-2" href={"/pages/home"}> <MdOutlineDashboard /> Dashboard </Link>
-                <Link className="nav-button border-b w-full p-2" href={"/pages/settings"}> <CiSettings /> Settings </Link>
+                <button className="nav-button border-b w-full p-2" onClick={() => logoutUser()}> <CiLogout />{t("logout")}</button>
+                <Link className="nav-button border-b w-full p-2" href={"/pages/profile"}> <CiUser /> {t("profile")} </Link>
+                <Link className="nav-button border-b w-full p-2" href={"/pages/home"}> <MdOutlineDashboard /> {t("dashboard")}</Link>
+                <Link className="nav-button border-b w-full p-2" href={"/pages/settings"}> <CiSettings /> {t("settings")} </Link>
                 <div className="nav-button border-b w-full p-2"> <MdLanguage />
                     <select
                         className="bg-transparent text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 p-1 focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-700"

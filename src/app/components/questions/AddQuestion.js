@@ -2,9 +2,11 @@
 import { createQuestion } from '@/app/actions/questions'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 const AddQuestion = ({ template, loadQuestions }) => {
 
+    const { t } = useTranslation("common")
     const [isDisplayed, setIsDisplayed] = useState(true)
     const [selection, setSelection] = useState("choose")
     const { register, setValue, reset, handleSubmit, formState: { errors } } = useForm();
@@ -23,31 +25,30 @@ const AddQuestion = ({ template, loadQuestions }) => {
     return (
     <div className='p-2'>
         <form className='p-1 flex flex-col gap-1 w-[250px]' onSubmit={handleSubmit(submitForm)}>
-            <label className='font-bold text-center'>Add Question</label>
-            <label className='font-bold'>Question Type</label>
+            <label className='font-bold text-center'>{t("add-question")}</label>
+            <label className='font-bold'>{t("question-type")}</label>
             <select className='dark-input' onChange={(e) => {
                 setSelection(e.target.value)
                 setValue("type", e.target.value)
                 }}>
-                <option value="choose">Choose Option</option>
-                <option value="text">Single Line</option>
-                <option value="multi_line">Multiple Line</option>
+                <option value="choose">{t("choose-option")}</option>
+                <option value="text">{t("single-line")}</option>
+                <option value="multi_line">{t("multiline")}</option>
                 <option value="checkbox">Checkbox</option>
-                <option value="integer">Number</option>
+                <option value="integer">{t("number")}</option>
             </select>
-            <label className='font-bold'>Question Title:</label>
+            <label className='font-bold'>{t("question-title")}:</label>
             <input required className='dark-input' {...register("title")}/>
-            <label className='font-bold'>Description:</label>
+            <label className='font-bold'>{t("template-description")}:</label>
             <textarea required className='dark-input resize-none' {...register("description")} />
             <div className='flex flex-row gap-2 justify-evenly'>
-                <label className='font-bold'>Display In Form?</label>
+                <label className='font-bold'>{t("display-in-form")}?</label>
                 <input type='checkbox' defaultChecked={true} onChange={(e) => setIsDisplayed(e.target.checked)} {...register("displayInResults")}/>
-                <p>{ isDisplayed ? 'Yes' : 'No' }</p>
             </div>
             { selection === 'choose' ? (
                 <></>
             ) : (
-                <button type='submit' className='blue-button mx-auto'>Add Question</button>
+                <button type='submit' className='blue-button mx-auto'>{t("add-question")}</button>
             ) }
         </form>
     </div>

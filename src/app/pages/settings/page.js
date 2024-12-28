@@ -72,10 +72,10 @@ const Settings = () => {
     <>
     { user && users ? (
     <div className='pt-[50px] border-[1px] border-black w-sceen h-screen'>
-        <div className="w-full h-full overflow-auto bg-gray-100 p-4">
+        <div className="w-full h-full overflow-auto bg-gray-100 p-4 dark:bg-gray-900 overflow-auto">
             <table className="w-full border-collapse bg-white rounded-lg shadow">
                 <thead>
-                <tr className="text-left text-sm font-semibold text-gray-600 bg-gray-200">
+                <tr className="text-left text-sm font-semibold text-gray-600 bg-gray-200 dark:bg-gray-700 dark:text-white">
                     <th className="p-4">{t("name")}</th>
                     <th className="p-4">Email</th>
                     <th className="p-4">{t("status")}</th>
@@ -86,7 +86,7 @@ const Settings = () => {
                 </thead>
                 <tbody>
                 {users.map((user, index) => (
-                    <tr key={index} className="border-t hover:bg-gray-50 text-sm text-gray-700">
+                    <tr key={index} className="border-t hover:bg-gray-50 text-sm text-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 dark:text-white">
                     <td className="p-4">{user.name}</td>
                     <td className="p-4">{user.email}</td>
                     <td className="p-4">
@@ -102,20 +102,20 @@ const Settings = () => {
                     </td>
                     <td className="p-4">
                     { user.status === 'active' ? (
-                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("block")} </button>
+                            <button className="px-3 py-1 new-theme-button" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("block")} </button>
                         ) : (
-                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("unblock")} </button>
+                            <button className="px-3 py-1 new-theme-button" onClick={(e) => handleBlockSwitch(e, user.id)}> {t("unblock")} </button>
                         )}
                     </td>
                     <td className="p-4">
                         { user.role === 'admin' ? (
-                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("remove-admin")} </button>
+                            <button className="px-3 py-1 new-theme-button" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("remove-admin")} </button>
                         ) : (
-                            <button className="px-3 py-1 text-white rounded font-bold bg-green-500 hover:bg-green-600" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("create-admin")} </button>
+                            <button className="px-3 py-1 new-theme-button" onClick={(e) => handleRoleSwitch(e, user.id)}> {t("create-admin")} </button>
                         )}
                     </td>
                     <td className="p-4">
-                        <button className="px-3 py-1 text-white rounded font-bold bg-red-500 hover:bg-red-600" onClick={(e) => handleUserDeletion(e, user.id)}> {t("delete")} </button>
+                        <button className="px-3 py-1 new-theme-red-button" onClick={(e) => handleUserDeletion(e, user.id)}> {t("delete")} </button>
                     </td>
                     </tr>
                 ))}

@@ -16,10 +16,12 @@ import { useAuth } from '@/app/hooks/useAuth';
 import { CiSettings } from 'react-icons/ci';
 import { logSession } from '@/app/actions/session';
 import { navigate } from '@/app/lib/redirect';
+import { useTranslation } from 'react-i18next';
 
 const Template = (context) => {
 
 	const user = useAuth();
+	const { t } = useTranslation('common');
   	const { id } = context.params
 
 	const [template, setTemplate] = useState(null)
@@ -77,8 +79,8 @@ const Template = (context) => {
 						<div className="w-[50%] flex flex-col items-end justify-evenly gap-3">
 							<Like template={template}/>
 							<RoleBasedComponent condition={(user) => user.role === 'admin' || template.creatorId === user.id} user={user?.user}>
-								<Link href={`/pages/template/${template.id}/forms`} className="new-theme-button w-[100px]"> Forms <IoArrowForwardCircleOutline />{" "} </Link>
-								<Link href={`/pages/template/${template.id}/settings`} className="new-theme-button w-[100px]"> Settings <CiSettings />{" "} </Link>
+								<Link href={`/pages/template/${template.id}/forms`} className="new-theme-button w-[100px]">{t("forms")}<IoArrowForwardCircleOutline />{" "} </Link>
+								<Link href={`/pages/template/${template.id}/settings`} className="new-theme-button w-[100px]"> {t("settings")} <CiSettings />{" "} </Link>
 							</RoleBasedComponent>
 						</div>
 					</header>
@@ -97,7 +99,7 @@ const Template = (context) => {
 
 						{/* Comments */}
 						<section className="w-full md:w-[30%] h-[30%] md:h-full border border-slate-200 p-3 rounded-lg dark:bg-gray-800 dark:border-gray-700">
-							<p className="font-bold text-black text-center dark:text-white">Comments</p>
+							<p className="font-bold text-black text-center dark:text-white">{t("comments")}</p>
 							<div className="border h-[90%] max-h-[500px] flex flex-col gap-2 p-2 w-full overflow-auto bg-white dark:bg-gray-900 dark:border-gray-600 rounded-lg">
 								{comments ? (
 									comments.map((comment, index) => {
@@ -106,7 +108,7 @@ const Template = (context) => {
 										)
 									})
 								) : (
-									<p className="text-center text-gray-500 dark:text-gray-400">No comments available</p>
+									<p className="text-center text-gray-500 dark:text-gray-400">{t("no-comments")}</p>
 								)}
 							</div>
 							<div className="border-t h-[10%] p-2 flex items-center justify-center bg-white dark:bg-gray-900 dark:border-gray-600 rounded-b-lg">

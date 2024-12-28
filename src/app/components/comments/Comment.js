@@ -6,10 +6,12 @@ import { useAuth } from '@/app/hooks/useAuth';
 import { deleteCommentById, editCommentById } from '@/app/actions/comments';
 import { socket } from '@/app/lib/socket';
 import RoleBasedComponent from '../general/RoleBasedComponent';
+import { useTranslation } from 'react-i18next';
 
 const Comment = ({ comment, loadComments, templateId, session }) => {
 
   const user = useAuth();
+  const { t } = useTranslation('common');
 
   const [isEditing, setIsEditing] = useState(false)
   const [newContent, setNewContent] = useState(comment.content)
@@ -56,8 +58,8 @@ const Comment = ({ comment, loadComments, templateId, session }) => {
         { isEditing ? (
           <div className='flex flex-row gap-2'>
             <input className='input' value={newContent} onChange={(e) => setNewContent(e.target.value)}/>
-            <button className='new-theme-button' onClick={handleEditComment}>Edit</button>
-            <button className='new-theme-gray-button' onClick={() => setIsEditing(false)}>Cancel</button>
+            <button className='new-theme-button' onClick={handleEditComment}>{t("edit")}</button>
+            <button className='new-theme-gray-button' onClick={() => setIsEditing(false)}>{f("cancel")}</button>
           </div>
         ) : (
           <p className="text-gray-700 dark:text-gray-300">{comment.content}</p>

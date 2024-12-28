@@ -25,25 +25,25 @@ const ExploreTemplates = () => {
             <p className='font-bold text-center text-lg dark:text-white'>{t("explore-templates")}</p>
             <div className="border-2 border-slate-200 dark:border-gray-600 rounded shadow-lg w-full h-full md:h-[550px] p-4 bg-white dark:bg-gray-800">
                 <div className='w-full'>
-                    <p className='font-bold mb-3 dark:text-white'>Top Five Templates</p>
+                    <p className='font-bold mb-3 dark:text-white'>{t("top-five")}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4">
                         {topTemplates ? (
                             topTemplates.map((template, index) => {
                                 return (
                                     <div key={index} className='rounded dark:bg-gray-700 p-2 flex flex-col items-center justify-center gap-1'>
                                         <TemplateThumbnail key={index} template={template} />
-                                        <p className='text-center dark:text-white'>{template?._count?.forms} forms filled</p>
+                                        <p className='text-center dark:text-white'>{template?._count?.forms} {t("forms-filled")}</p>
                                     </div>
                                 )
                             })
                         ) : (
-                            <p className='dark:text-white'>Loading Templates...</p>
+                            <p className='dark:text-white'>{t("loading-templates")}</p>
                         )}
                     </div>
                 </div>
 
                 <div className="w-full mt-6">
-                    <p className="font-bold mb-3 dark:text-white">All Templates</p>
+                    <p className="font-bold mb-3 dark:text-white">{t("all-templates")}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4">
                         {templates ? (
                             templates.map((template, index) => {
@@ -54,7 +54,7 @@ const ExploreTemplates = () => {
                                 )
                             })
                         ) : (
-                            <p className='dark:text-white'>Loading Templates...</p>
+                            <p className='dark:text-white'>{t("loading-templates")}</p>
                         )}
                     </div>
                 </div>

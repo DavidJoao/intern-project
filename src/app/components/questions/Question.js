@@ -4,6 +4,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { MdModeEditOutline } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { deleteQuestionById, editQuestionById } from "@/app/actions/questions";
+import { useTranslation } from "react-i18next";
 
 const Question = ({ question, index, moveQuestion, template, loadQuestions, handleAnswerChange, formResetTrigger }) => {
 
@@ -15,6 +16,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	const ref = useRef(null)
 	const inputRef = useRef(null);
 	const user = useAuth();
+	const { t } = useTranslation("common")
 
 	const [inputType, setInputType] = useState(<></>)
 	const [isEditing, setIsEditing] = useState(false)
@@ -119,11 +121,11 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 			( <p className="text-gray-700 dark:text-gray-300">{question.description}</p> ) }
 			{ isEditing && (
 				<div className="flex flex-row gap-3 mt-2">
-					<button type="submit" className="new-theme-button" onClick={handleEdit}>Edit</button>
-					<button className="new-theme-gray-button" onClick={() => setIsEditing(!isEditing)}>Cancel</button>
+					<button type="submit" className="new-theme-button" onClick={handleEdit}>{t("edit")}</button>
+					<button className="new-theme-gray-button" onClick={() => setIsEditing(!isEditing)}>{t("cancel")}</button>
 				</div>
 			)}
-			<label className="text-sm text-gray-500 dark:text-gray-400 mt-3">Answer:</label>
+			<label className="text-sm text-gray-500 dark:text-gray-400 mt-3">{t("answer")}:</label>
 			<div className="text-gray-800 dark:text-gray-200">
 				{inputType} 
 				{question?.type === 'checkbox' && <p>{isChecked ? "True" : "False"}</p>}

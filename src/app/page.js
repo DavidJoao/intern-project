@@ -1,10 +1,20 @@
 'use client'
 import { useTranslation } from "react-i18next";
 import { navigate } from "./lib/redirect";
+import { useEffect } from "react";
+import { logSession } from "./actions/session";
 
 export default function Home() {
 
     const { t } = useTranslation('common');
+    
+    useEffect(() => {
+        const checkForSession = async () => {
+            const session = await logSession();
+            if (session) navigate("/pages/home")
+        }
+    checkForSession();
+    }, [])
 
     return (
         <div className="w-screen h-screen flex flex-col-reverse lg:flex-row basic-theme">

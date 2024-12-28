@@ -1,10 +1,13 @@
 'use client'
 import { deleteAnswerById, editAnswerById } from "@/app/actions/forms"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { FaTrash } from "react-icons/fa"
 import { MdModeEditOutline } from "react-icons/md"
 
 const Answer = ({ answer, form, getForms }) => {
+
+    const { t } = useTranslation("common")
 
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState(answer?.value)
@@ -36,8 +39,8 @@ const Answer = ({ answer, form, getForms }) => {
                     <button className="new-theme-red-button" onClick={handleDelete}><FaTrash /></button>
 				</div>
 			</div>
-			<label>Question: {answer?.question?.description}</label>
-			<p>Answer:</p>
+			<label>{t("question")}: {answer?.question?.description}</label>
+			<p>{t("answer")}:</p>
             { isEditing ? (
                 <>
                 { answer.value === true || answer.value === false ? (
@@ -49,8 +52,8 @@ const Answer = ({ answer, form, getForms }) => {
                     <input value={editValue} className="input"  onChange={(e) => setEditValue(e.target.value)}/>
                 )
                 }
-                <button className="blue-button w-auto" onClick={handleEdit}>Edit</button>
-                <button className="bg-slate-500 text-white rounded font-bold p-1" onClick={() => setIsEditing(false)}>Cancel</button>
+                <button className="blue-button w-auto" onClick={handleEdit}>{t("edit")}</button>
+                <button className="bg-slate-500 text-white rounded font-bold p-1" onClick={() => setIsEditing(false)}>{t("cancel")}</button>
                 </>
             ) : (
                 <p className="italic">{answer?.value.toString()}</p>

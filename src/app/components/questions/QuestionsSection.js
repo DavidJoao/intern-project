@@ -7,10 +7,12 @@ import { createForm, sendFormThroughEmail } from "@/app/actions/forms";
 import { useAuth } from "@/app/hooks/useAuth";
 import NonAuthQuestion from "./NonAuthQuestion";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, session }) => {
 
   const user = useAuth();
+  const { t } = useTranslation('common');
 
   const [answers, setAnswers] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
@@ -65,7 +67,7 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
     setErrorMessage("")
     e.preventDefault();
     if (answers?.length < questions?.length) {
-      setErrorMessage("It is required to answer all questions")
+      setErrorMessage(t("must-answer"))
     } else {
       const response = await createForm(user?.user?.id, template?.id, answers);
       console.log(response)
@@ -87,7 +89,7 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
 
     const response = await sendFormThroughEmail(emailData)
     if (response.status === 200) {
-      setSuccessMessage("Email Sent Successfully! Remember to check your Spam Folder. Please Wait...")
+      setSuccessMessage(t("email-success"))
       setTimeout(async () => {
         await handleSubmitForm(e)
         setSuccessMessage("")
@@ -106,14 +108,14 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
               <Question key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger} session={session}/>
             ))
           ) : (
-            <p className="text-center">No questions at the moment</p>
+            <p className="text-center">{t("no-questions")}</p>
           )}
           { answers?.length !== questions?.length ? (
-            <p className="mx-auto text-center">Must Answer All Questions to Submit</p>
+            <p className="mx-auto text-center">{t("must-answer")}</p>
           ) : (
             <>
-            <button className="blue-button h-auto mx-auto" type="submit">Send Form</button>
-            <button className="blue-button h-auto mx-auto" onClick={(e) => sendEmail(e)}>Send Form & Email Me A Copy</button>
+            <button className="blue-button h-auto mx-auto" type="submit">{t("send-form")}</button>
+            <button className="blue-button h-auto mx-auto" onClick={(e) => sendEmail(e)}>{t("send-form-copy")}</button>
             </>
           ) }
           <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
@@ -129,10 +131,10 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
               <NonAuthQuestion key={question.id} question={question} index={index} moveQuestion={moveQuestion} template={template} loadQuestions={loadQuestions} setAnswers={setAnswers} handleAnswerChange={handleAnswerChange} formResetTrigger={formResetTrigger} session={session}/>
             ))
           ) : (
-            <p className="text-center">No questions at the moment</p>
+            <p className="text-center">{t("no-questions")}</p>
           )}
 
-          {session && <button className="blue-button h-auto mx-auto" type="submit">Send Form</button> }
+          {session && <button className="blue-button h-auto mx-auto" type="submit">{t("send-form")}</button> }
           <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
         </form>
       </div>

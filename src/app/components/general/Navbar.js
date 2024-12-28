@@ -35,10 +35,10 @@ const Navbar = ({ session }) => {
             <div className="w-screen h-[50px] hidden md:flex flex-row-reverse items-center p-3 gap-3 fixed top-0 left-0 z-[101] shadow-lg bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">
                 {session ? (
                     <>
-                    <button className='nav-button' onClick={() => logoutUser()}><CiLogout/>Logout</button>
-                    <Link className='nav-button' href={'/pages/profile'}><CiUser /> Profile</Link>
-                    <Link className='nav-button' href={'/pages/home'}><MdOutlineDashboard />Dashboard</Link>
-                    <Link className='nav-button' href={'/pages/settings'}><CiSettings /> Settings</Link>
+                    <button className='nav-button' onClick={() => logoutUser()}><CiLogout/>{t("logout")}</button>
+                    <Link className='nav-button' href={'/pages/profile'}><CiUser />{t("profile")}</Link>
+                    <Link className='nav-button' href={'/pages/home'}><MdOutlineDashboard />{t("dashboard")}</Link>
+                    <Link className='nav-button' href={'/pages/settings'}><CiSettings />{t("settings")}</Link>
                     <div className='nav-button'>
                         <MdLanguage />
                         <select className="bg-transparent text-gray-700 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 p-1 focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-700" onChange={(e) => changeLanguage(e.target.value)}>
@@ -75,7 +75,6 @@ const Navbar = ({ session }) => {
             </div>
             <div className='flex items-center justify-center md:hidden w-full fixed top-0 z-[101] bg-white dark:bg-gray-900'>
                 <button className='theme-button w-full' onClick={() => setIsOpen(!isOpen)}><CiMenuBurger className='mx-auto'/></button>
-                { session && <Link href={'#create-template'} className='theme-button w-full text-xs text-center'>Create Template</Link> }
                 { theme === 'dark' ? (
                         <button className="theme-button text-center" onClick={() => toggleTheme()}><CiLight className='mx-auto'/></button>
                     ) : (

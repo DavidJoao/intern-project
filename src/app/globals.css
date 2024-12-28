@@ -57,7 +57,7 @@ body {
     @apply px-4 py-2 rounded-md text-white bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 transition-all
   }
   .new-theme-red-button{
-    @apply text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors
+    @apply px-4 py-2 rounded-md text-white bg-red-400 hover:bg-red-500 dark:bg-red-600 dark:hover:bg-red-700 focus:ring-2 focus:ring-red-300 dark:focus:ring-red-500 transition-all
   }
   .dark-input{
     @apply input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600

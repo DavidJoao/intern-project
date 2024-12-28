@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '@/app/hooks/useAuth';
 import { createComment } from '@/app/actions/comments';
 import { socket } from '@/app/lib/socket';
+import { useTranslation } from 'react-i18next';
 
 const CreateComment = ({ template, loadComments }) => {
     
     const user = useAuth();
+    const { t } = useTranslation('common');
     const { register, setValue, reset, handleSubmit, formState: { errors } } = useForm();
     
     useEffect(() => {
@@ -38,7 +40,7 @@ const CreateComment = ({ template, loadComments }) => {
     
     return (
     <form className="flex flex-row items-center justify-center gap-2 p-2 border-gray-200 dark:border-gray-600 rounded-b-lg" onSubmit={handleSubmit(postComment)}>
-        <input required className='dark-input resize-none' placeholder='Post a comment...' {...register("content")} />
+        <input required className='dark-input resize-none' placeholder={t("post-comment")} {...register("content")} />
         <button type='submit' className="new-theme-button"><IoArrowForwardCircleOutline/></button>
     </form>
   )

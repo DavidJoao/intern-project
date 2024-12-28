@@ -39,7 +39,7 @@ const Provider = ( { children } ) => {
 
     const loadAllTemplates = async () => {
       const { data } = await fetchTemplates();
-      setTemplates(data.templates)
+      setTemplates(data?.templates)
     }
 
     return (

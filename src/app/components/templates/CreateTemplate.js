@@ -79,9 +79,9 @@ const CreateTemplate = ({ userId }) => {
         <form id='create-template' className="border-2 border-slate-200 dark:border-gray-600 w-full h-auto md:min-h-[550px] max-w-lg p-4 rounded-lg shadow-md bg-white dark:bg-gray-800 grid gap-4" onSubmit={handleSubmit(submitForm)}>
             
             <div className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Topic</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{t("topic")}</p>
                 <select className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 p-2" onChange={(e) => setValue("topic", e.target.value)}>
-                    <option>Choose Topic</option>
+                    <option>{t("choose-topic")}</option>
                     { topics?.map((topic, index) => {
                         return (
                             <option key={index}>{topic}</option>
@@ -91,22 +91,22 @@ const CreateTemplate = ({ userId }) => {
             </div>
             
             <div className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Other Topic</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{t("other-topic")}</p>
                 <input required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" {...register("topic")}  onChange={(e) => setValue("topic", e.target.value)}/>
             </div>
                     
             <div className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Name</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{t("title")}</p>
                 <input required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" {...register("name", { required: true })}/>
             </div>
 
             <div className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Description</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{t("template-description")}</p>
                 <textarea required className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 resize-none" {...register("description", { required: true })}/>
             </div>
 
             <div className="flex flex-col">
-                <p className="text-sm text-gray-600 dark:text-gray-300">Image</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">{t("image")}</p>
                 <input type='file' className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" onChange={handleImageUpload}/>
             </div>
 
@@ -117,8 +117,8 @@ const CreateTemplate = ({ userId }) => {
             </div>
 
             <div className='p-2 flex flex-col'>
-                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">After creating your template with this initial configuration you will be able to add questions, tags and change the image.</p>
-                <button className="new-theme-button mx-auto" type='submit'>Post and go to Template</button>
+                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{t("creation-note")}</p>
+                <button className="new-theme-button mx-auto" type='submit'>{t("post-n-go")}</button>
             </div>
         </form>
     </div>
