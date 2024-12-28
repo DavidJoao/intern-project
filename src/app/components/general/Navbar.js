@@ -9,15 +9,25 @@ import { MdOutlineDashboard, MdLanguage } from "react-icons/md";
 import { GoMoon } from "react-icons/go";
 import { icons } from '@/app/lib/icons';
 import MobileNavMenu from './MobileNavMenu';
+import { navigate } from '@/app/lib/redirect';
 
 const Navbar = ({ session }) => {
 
     const { toggleTheme, theme } = useAppContext()
     const { t, i18n } = useTranslation('common');
     const [isOpen, setIsOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
+
 
     const changeLanguage = async (lng) => {
         await i18n.changeLanguage(lng);
+    }
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        console.log(searchQuery)
+        navigate(`/pages/search/${searchQuery}`)
+        setSearchQuery("")
     }
 
     return (
@@ -42,8 +52,8 @@ const Navbar = ({ session }) => {
                         <button className="" onClick={() => toggleTheme()}><GoMoon /></button>
                     ) }
                     <form className='h-auto w-auto flex flex-row items-center justify-center gap-2 p-5 mx-auto'>
-					    <input className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder={t("search-template")}/>
-					    <button className='dark:text-gray-400'>{icons.search}</button>
+					    <input className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder={t("search-template")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+					    <button className='dark:text-gray-400' onClick={(e) => handleSearch(e)}>{icons.search}</button>
 				    </form>
                 </>
                 ) : (
