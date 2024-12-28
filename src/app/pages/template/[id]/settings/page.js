@@ -19,6 +19,7 @@ const TemplateSettings = (context) => {
         title: "",
         description: "",
         topic: "",
+        isPublic: null
     }
     
     const [template, setTemplate] = useState(null)
@@ -34,7 +35,7 @@ const TemplateSettings = (context) => {
         if (id) {
           const { data } = await getTemplateById(id);
           setTemplate(data.foundTemplate);
-          setEditContent({ title: data.foundTemplate.title, description: data.foundTemplate.description, topic: data.foundTemplate.topic })
+          setEditContent({ title: data.foundTemplate.title, description: data.foundTemplate.description, topic: data.foundTemplate.topic, isPublic: data.foundTemplate.isPublic })
         }
       }
 
@@ -77,23 +78,29 @@ const TemplateSettings = (context) => {
     <>
     {template ? (
         <RoleBasedComponent condition={(user) => user?.role === 'admin' || user?.id === template.creatorId} user={user?.user}>
-        <div className="w-screen h-auto md:h-screen flex flex-col pt-[50px]">
-            <form className='border-[1px] border-black p-2 flex flex-col gap-2 items-center' onSubmit={handleSubmit}>
+        <div className="general-bg min-h-screen flex flex-col pt-[50px]">
+            <form className='p-2 flex flex-col gap-2 items-center' onSubmit={handleSubmit}>
                 <label>Title:</label>
-                <input name='title' className='input w-[200px]' value={editContent.title} onChange={handleChange}/>
+                <input name='title' className='dark-input w-[200px]' value={editContent.title} onChange={handleChange}/>
                 <label>Description:</label>
-                <input name='description' className='input w-[200px]' value={editContent.description} onChange={handleChange}/>
+                <textarea name='description' className='dark-input w-[200px] resize-none' value={editContent.description} onChange={handleChange}/>
                 <label>Topic:</label>
-                <select name='topic' className='input w-[200px]' value={editContent.topic} onChange={handleChange}>
+                <select name='topic' className='dark-input w-[200px]' value={editContent.topic} onChange={handleChange}>
                 { topics?.map((topic, index) => {
                         return (
                             <option key={index}>{topic}</option>
                         )
                     })}
                 </select>
-                <button type='submit' className='blue-button w-[200px]'>Submit Changes</button>
-                <button className='bg-red-500 text-white font-bold rounded p-2 w-[200px]' onClick={deleteTemplate}>DELETE</button>
-                <Link href={`/pages/template/${id}`} className='bg-slate-500 text-white font-bold rounded p-2 w-[200px] text-center'>Go to template</Link>
+                <label>Public?</label>
+                <select className='dark-input w-[200px]' value={editContent.isPublic} onChange={handleChange}>
+                    <option>Choose Option</option>
+                    <option value={true}>True</option>
+                    <option value={false}>False</option>
+                </select>
+                <button type='submit' className='new-theme-button'>Submit Changes</button>
+                <button className='p-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600' onClick={deleteTemplate}>Delete</button>
+                <Link href={`/pages/template/${id}`} className='new-theme-gray-button'>Go to template</Link>
                 <p className='font-bold text-green-600'>{successMessage}</p>
             </form>
         </div>
