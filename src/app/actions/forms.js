@@ -49,3 +49,13 @@ export const deleteFormById = async (formId) => {
         return error
     }
 }
+
+export const sendFormThroughEmail = async (emailData) => {
+    try {
+        const response = await axios.post(`/api/forms/email`, { emailData: emailData }, { headers: { "Content-Type":"application/json" } })
+        return response
+    } catch (error) {
+        console.log(error);
+        return error
+    }
+}
