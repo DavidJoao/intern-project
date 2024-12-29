@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { logoutUser } from '@/app/actions/session'
 import Link from 'next/link'
 import { useTranslation } from "react-i18next";
@@ -10,25 +10,54 @@ import { GoMoon } from "react-icons/go";
 import { icons } from '@/app/lib/icons';
 import MobileNavMenu from './MobileNavMenu';
 import { navigate } from '@/app/lib/redirect';
+import { getMatchingTagsAPI } from '@/app/actions/templates';
+import { useAuth } from '@/app/hooks/useAuth';
 
 const Navbar = ({ session }) => {
+
+    const user = useAuth();
 
     const { toggleTheme, theme } = useAppContext()
     const { t, i18n } = useTranslation('common');
     const [isOpen, setIsOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
+    const [matchingTags, setMatchingTags] = useState([]); 
+    const [username, setUsername] = useState("")
 
 
     const changeLanguage = async (lng) => {
         await i18n.changeLanguage(lng);
     }
 
-    const handleSearch = async (e) => {
+    const handleSearch = async (e, searchQuery) => {
         e.preventDefault();
         console.log(searchQuery)
         navigate(`/pages/search/${searchQuery}`)
         setSearchQuery("")
     }
+
+    useEffect(() => {
+        if (user?.user?.name) setUsername(user?.user?.name)
+    }, [user])
+
+    useEffect(() => {
+        const fetchTags = async () => {
+            if (searchQuery.trim() === '') {
+                setMatchingTags([]);
+                return;
+            }
+            try {
+                const { data } = await getMatchingTagsAPI(searchQuery);
+                console.log(data)
+                setMatchingTags(data.tags || []);
+            } catch (error) {
+                console.log("Error fetching Tags:", error);
+                setMatchingTags([]);
+            }
+        };
+        fetchTags();
+    }, [searchQuery]);
+
 
     return (
         <>
@@ -53,8 +82,21 @@ const Navbar = ({ session }) => {
                     ) }
                     <form className='h-auto w-auto flex flex-row items-center justify-center gap-2 p-5 mx-auto'>
 					    <input className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder={t("search-template")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-					    <button className='dark:text-gray-400' onClick={(e) => handleSearch(e)}>{icons.search}</button>
+					    <button className='dark:text-gray-400' onClick={(e) => handleSearch(e, searchQuery)}>{icons.search}</button>
+                        {Array.isArray(matchingTags) && matchingTags.length > 0 && searchQuery !== '' && (
+                            <ul className="absolute top-full w-[200px] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg z-50 p-1 flex flex-col gap-1">
+                                <li className='new-theme-gray-button cursor-pointer' onClick={(e) => handleSearch(e, searchQuery)}>{searchQuery}...</li>
+                                {matchingTags.map((tag, index) => (
+                                    <li key={index} onClick={async (e) => {
+                                        setSearchQuery(tag)
+                                        await handleSearch(e, tag)
+
+                                    }} className='new-theme-gray-button cursor-pointer'> {tag} </li>
+                                ))}
+                            </ul>
+                        )}
 				    </form>
+                    <p>{username}</p>
                 </>
                 ) : (
                     <>
