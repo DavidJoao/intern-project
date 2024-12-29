@@ -13,31 +13,34 @@ const Home = () => {
 
 	const [session, setSession] = useState(null)
 	const [isLoading, setIsLoading] = useState(true);
+	
+	const user = useAuth();
+	const { t } = useTranslation('common');
 
-	useEffect(() => {
-		fetchSession();
-	}, [])
+    useEffect(() => {
+        if (!session && user) {
+            fetchSession();
+        } else {
+            setIsLoading(false);
+        }
+    }, [user, session]);
 
-	const fetchSession = async () => {
-		if (user) setIsLoading(false);
-		try {
-			setIsLoading(true);
-			const session = await logSession();
-			setSession(session);
-		} finally {
-			setIsLoading(false);
-		}
-	}
-
-  	const user = useAuth();
-  	const { t } = useTranslation('common');
+    const fetchSession = async () => {
+        try {
+            setIsLoading(true);
+            const sessionData = await logSession();
+            setSession(sessionData);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
   return (
 	<div className="w-screen min-h-screen h-auto flex flex-col pt-[50px] bg-slate-200 dark:bg-gray-700 scroll-smooth">
 		{isLoading ? (
 			<Loading />
 		) : user && session ? (
-			<div className="h-full flex flex-col md:flex-row items-center justify-center p-3 gap-6">
+			<div className="h-full flex flex-col items-center justify-center p-3 gap-6">
 				<ExploreTemplates />
 				<CreateTemplate userId={user.user.id} />
 			</div>
