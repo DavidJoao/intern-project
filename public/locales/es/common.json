@@ -64,5 +64,7 @@
     "submit-changes": "Enviar cambios",
     "public": "Publico",
     "goto-template": "Ir a la plantilla",
-    "allowed-users":"Usuarios permitidos"
+    "allowed-users":"Usuarios permitidos",
+    "tags": "Etiquetas",
+    "add-tag": "Añadir etiqueta"
   }

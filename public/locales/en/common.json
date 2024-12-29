@@ -64,5 +64,7 @@
     "submit-changes": "Submit changes",
     "public": "Public",
     "goto-template": "Go to template",
-    "allowed-users": "Allowed Users"
+    "allowed-users": "Allowed Users",
+    "tags": "Tags",
+    "add-tag": "Add tag"
 }
