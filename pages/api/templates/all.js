@@ -5,7 +5,7 @@ export default async function GET(req, res) {
     const user = await db.user.findUnique({ where: { id: userId } })
     try {
         if (user?.role === 'admin') {
-            const templates = await db.template.findMany({});
+            const templates = await db.template.findMany({ include: { creator: { select: { name: true } } } });
             return res.status(200).json({ templates });
         }
 
@@ -25,6 +25,13 @@ export default async function GET(req, res) {
                         ]
                     }
                 ]
+            },
+            include: {
+                creator: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         });
         
