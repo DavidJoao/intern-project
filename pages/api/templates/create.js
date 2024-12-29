@@ -19,6 +19,7 @@ export default async function POST(req, res){
                 imageUrl: form.imageUrl,
                 creatorId: form.creatorId,
                 order: form.order ?? defaultOrder,
+                tags: form.tags
             }
         })
         res.status(201).json({template: createdTemplate})
