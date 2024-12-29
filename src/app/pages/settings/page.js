@@ -71,7 +71,7 @@ const Settings = () => {
   return (
     <>
     { user && users ? (
-    <div className='pt-[50px] border-[1px] border-black w-sceen h-screen'>
+    <div className='pt-[50px] border-[1px] border-black w-sceen h-screen dark:bg-gray-900 '>
         <div className="w-full h-full overflow-auto bg-gray-100 p-4 dark:bg-gray-900 overflow-auto">
             <table className="w-full border-collapse bg-white rounded-lg shadow">
                 <thead>
