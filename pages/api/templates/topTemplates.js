@@ -8,6 +8,11 @@ export default async function GET(req, res){
                     select: {
                         forms: true
                     }
+                },
+                creator: {
+                    select: {
+                        name: true
+                    }
                 }
             },
             orderBy: {
