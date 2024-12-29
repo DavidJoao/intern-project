@@ -5,6 +5,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { deleteQuestionById, editQuestionById } from "@/app/actions/questions";
 import { useTranslation } from "react-i18next";
+import ReactMarkdown from 'react-markdown';
 
 const Question = ({ question, index, moveQuestion, template, loadQuestions, handleAnswerChange, formResetTrigger, setAnswers }) => {
 
@@ -131,7 +132,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 
 			{ isEditing ? ( <input className="input text-black" placeholder="Description" value={newEditContent.description} onChange={(e) => setNewEditContent({...newEditContent, ['description']: e.target.value})}/>) 
 			: 
-			( <p className="text-gray-700 dark:text-gray-300">{question.description}</p> ) }
+			( <ReactMarkdown className="text-gray-700 dark:text-gray-300">{question.description}</ReactMarkdown> ) }
 			{ isEditing && (
 				<div className="flex flex-row gap-3 mt-2">
 					<button type="submit" className="new-theme-button" onClick={handleEdit}>{t("edit")}</button>

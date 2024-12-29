@@ -3,12 +3,14 @@ import { createQuestion } from '@/app/actions/questions'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import ReactMarkdown from 'react-markdown'
 
 const AddQuestion = ({ template, loadQuestions }) => {
 
     const { t } = useTranslation("common")
     const [isDisplayed, setIsDisplayed] = useState(true)
     const [selection, setSelection] = useState("choose")
+    const [previewMarkdown, setPreviewMarkdown] = useState("");
     const { register, setValue, reset, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
@@ -20,6 +22,7 @@ const AddQuestion = ({ template, loadQuestions }) => {
         await loadQuestions(template?.id);
         reset();
         setValue("templateId", template?.id)
+        setPreviewMarkdown("");
     }
 
     return (
@@ -40,7 +43,13 @@ const AddQuestion = ({ template, loadQuestions }) => {
             <label className='font-bold'>{t("question-title")}:</label>
             <input required className='dark-input' {...register("title")}/>
             <label className='font-bold'>{t("template-description")}:</label>
-            <textarea required className='dark-input resize-none' {...register("description")} />
+            <textarea required className='dark-input resize-none' {...register("description")} onChange={(e) => setPreviewMarkdown(e.target.value)}/>
+            <div className="markdown-preview mt-2">
+                <label className="font-bold">{t("preview")}:</label>
+                <div className="border p-2 rounded dark:bg-gray-800">
+                    <ReactMarkdown>{previewMarkdown}</ReactMarkdown>
+                </div>
+            </div>
             <div className='flex flex-row gap-2 justify-evenly'>
                 <label className='font-bold'>{t("display-in-form")}?</label>
                 <input type='checkbox' defaultChecked={true} onChange={(e) => setIsDisplayed(e.target.checked)} {...register("displayInResults")}/>
