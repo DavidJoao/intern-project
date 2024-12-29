@@ -40,7 +40,7 @@ const Provider = ( { children } ) => {
 
     const loadAllTemplates = async () => {
       const session = await logSession();
-      if (session.user) {
+      if (session?.user) {
         const { data } = await fetchTemplates(session?.user);
         setTemplates(data?.templates || []);
       }
