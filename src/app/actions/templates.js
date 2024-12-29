@@ -165,3 +165,13 @@ export const getMatchingEmailsAPI = async (query) => {
         return error
     }
 }
+
+export const getMatchingTagsAPI = async (query) => {
+    try {
+        const response = await axios.get(`/api/templates/getMatchingTags?query=${encodeURIComponent(query)}`);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
