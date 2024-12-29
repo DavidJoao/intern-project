@@ -56,10 +56,10 @@ const Comment = ({ comment, loadComments, templateId, session }) => {
           </div>
         </div>
         { isEditing ? (
-          <div className='flex flex-row gap-2'>
-            <input className='input' value={newContent} onChange={(e) => setNewContent(e.target.value)}/>
+          <div className='flex flex-col gap-2 mt-1'>
+            <input className='input dark:text-black' value={newContent} onChange={(e) => setNewContent(e.target.value)}/>
             <button className='new-theme-button' onClick={handleEditComment}>{t("edit")}</button>
-            <button className='new-theme-gray-button' onClick={() => setIsEditing(false)}>{f("cancel")}</button>
+            <button className='new-theme-gray-button' onClick={() => setIsEditing(false)}>{t("cancel")}</button>
           </div>
         ) : (
           <p className="text-gray-700 dark:text-gray-300">{comment.content}</p>
