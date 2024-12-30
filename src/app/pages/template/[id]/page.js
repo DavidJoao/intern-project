@@ -92,7 +92,7 @@ const Template = (context) => {
 							<div className="flex flex-col items-center w-auto gap-4 border-3 rounded-lg p-4 lg:h-full lg:max-h-[600px] overflow-auto dark:bg-gray-800 bg-white border-gray-300 dark:border-gray-600">
 								<QuestionsSection questions={questions} setQuestions={setQuestions} template={template} loadQuestions={loadQuestions} session={session}/>
 								<RoleBasedComponent condition={(user) => user?.role === 'admin' || template.creatorId === user?.id} user={user?.user}>
-									<AddQuestion template={template} loadQuestions={loadQuestions} />
+									<AddQuestion template={template} loadQuestions={loadQuestions} questions={questions} />
 								</RoleBasedComponent>
 							</div>
 						</section>
