@@ -2,6 +2,7 @@
 import { searchTemplateAPI } from '@/app/actions/templates';
 import TemplateThumbnail from '@/app/components/templates/TemplateThumbnail';
 import React, { useEffect, useState } from 'react'
+import { icons } from '@/app/lib/icons';
 
 const SearchQuery = (context) => {
 
@@ -31,8 +32,9 @@ const SearchQuery = (context) => {
             }) }
             </>
         ) : (
-            <p>No templates including {query} found</p>
+            <p>{icons.loading}</p>
         ) }
+        { templates?.length === 0 && <p>No templates including {query} found</p> }
         </div>
     </div>
   )
