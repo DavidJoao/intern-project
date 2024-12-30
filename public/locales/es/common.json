@@ -56,7 +56,7 @@
     "display-in-form":"Mostrar en formulario",
     "yes":"Sí",
     "top-five": "Top 5 plantillas",
-    "forms-filled": "Plantillas respondidas",
+    "forms-filled": "Formularios contestados",
     "loading-templates": "Cargando plantillas...",
     "all-templates": "Todas las plantillas",
     "by": "por",
@@ -66,5 +66,6 @@
     "goto-template": "Ir a la plantilla",
     "allowed-users":"Usuarios permitidos",
     "tags": "Etiquetas",
-    "add-tag": "Añadir etiqueta"
+    "add-tag": "Añadir etiqueta",
+    "loading": "Cargando, por favor espere..."
   }

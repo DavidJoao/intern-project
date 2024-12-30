@@ -66,5 +66,6 @@
     "goto-template": "Go to template",
     "allowed-users": "Allowed Users",
     "tags": "Tags",
-    "add-tag": "Add tag"
+    "add-tag": "Add tag",
+    "loading": "Loading, please wait..."
 }
