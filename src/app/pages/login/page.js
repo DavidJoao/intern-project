@@ -7,6 +7,7 @@ import { fetchUserStatusByEmail, signInUser } from '@/app/actions/user';
 import { useRouter } from 'next/navigation';
 import { logSession } from '@/app/actions/session';
 import { useTranslation } from 'react-i18next';
+import { icons } from '@/app/lib/icons';
 
 
 const Login = () => {
@@ -17,12 +18,14 @@ const Login = () => {
 
     const [session, setSession] = useState(null)
     const [errorMessage, setErrorMessage] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const [successMessage, setSuccessMessage] = useState("")
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
         setErrorMessage("");
+        setIsLoading(true)
         try {
             const userStatus = await fetchUserStatusByEmail(data.email)
             if (userStatus === 'blocked') {
@@ -34,6 +37,7 @@ const Login = () => {
               } else if (response.error === 'CredentialsSignin') {
                 setErrorMessage("Invalid Credentials")
               }
+              setIsLoading(false)
               router.refresh();
               return response
             }
@@ -67,7 +71,7 @@ const Login = () => {
                     <input required className='input w-[70%] lowercase' {...register("email", { required: true })}/>
                     <label>{t('password')}</label>
                     <input required className='input w-[70%]' type='password'  {...register("password", { required: true })}/>
-                    <button type='submit' className='theme-button w-[70%]'>{t("login")}</button>
+                    <button type='submit' className='theme-button w-[70%] flex items-center justify-center'>{ isLoading ? icons.loading : t("login")}</button>
                     <p className='error-message'>{errorMessage}</p>
                 </form>
                 <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>{t('no-account')}</Link>
