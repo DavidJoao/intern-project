@@ -1,9 +1,10 @@
 'use client'
 import { getLikeInfo, likeTemplate } from '@/app/actions/likes';
 import { useAuth } from '@/app/hooks/useAuth'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { FcLike, FcDislike } from 'react-icons/fc';
 import Loading from '../general/Loading';
+import { socket } from '@/app/lib/socket';
 
 
 const Like = ({ template }) => {
@@ -13,24 +14,38 @@ const Like = ({ template }) => {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        if (user?.user?.id && template?.id) {
-            fetchLikeInfo();
-        }
-    }, [user?.user?.id, template?.id]);
-
-    const fetchLikeInfo = async () => {
-        setIsLoading(true)
-        const { data } = await getLikeInfo(user?.user?.id, template.id)
-        setLikeData(data)
-        setIsLoading(false)
-    }
-
-    const handleLikeTemplate = async () => {
-        const response = await likeTemplate(user?.user?.id, template.id)
-        console.log(response);
-        await fetchLikeInfo();
-    }
+        socket.on("Liked Template", () => {
+            fetchLikeInfo()
+        });
     
+        return () => {
+          socket.off("Liked Template", fetchLikeInfo);
+        };
+      }, [likeData]);
+
+      
+      const fetchLikeInfo = useCallback(async () => {
+          if (user?.user?.id && template?.id) {
+              const { data } = await getLikeInfo(user?.user?.id, template.id);
+              setLikeData(data);
+            }
+        }, [user?.user?.id, template?.id]);
+        
+        const handleLikeTemplate = async () => {
+            const response = await likeTemplate(user?.user?.id, template.id)
+            console.log(response);
+            await fetchLikeInfo();
+            socket.emit("liked template");
+        }
+        
+        useEffect(() => {
+          if (user?.user?.id && template?.id) {
+              fetchLikeInfo();
+              socket.on("Liked Template", fetchLikeInfo);
+              return () => socket.off("Liked Template", fetchLikeInfo);
+          }
+      }, [fetchLikeInfo]);
+      
     return (
         <>
         { isLoading ? (
