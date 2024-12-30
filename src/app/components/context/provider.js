@@ -1,6 +1,6 @@
 "use client"
 import { SessionProvider } from 'next-auth/react'
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { I18nextProvider } from 'react-i18next';
 import i18next from '../../lib/i18n';
 import { fetchTemplates } from '@/app/actions/templates';
@@ -38,13 +38,18 @@ const Provider = ( { children } ) => {
       localStorage.setItem('theme', newTheme);
     };
 
-    const loadAllTemplates = async () => {
-      const session = await logSession();
-      if (session?.user) {
-        const { data } = await fetchTemplates(session?.user);
-        setTemplates(data?.templates || []);
+    const loadAllTemplates = useCallback(async () => {
+      try {
+        const session = await logSession();
+        if (session?.user) {
+          const { data } = await fetchTemplates(session.user);
+          setTemplates(data?.templates || []);
+        }
+      } catch (error) {
+        console.error("Error loading templates:", error);
+        setAppNotification("Failed to load templates. Please try again.");
       }
-    }
+    }, []);
 
     return (
         <SessionProvider>
