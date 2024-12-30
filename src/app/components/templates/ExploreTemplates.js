@@ -7,13 +7,17 @@ import { useTranslation } from 'react-i18next';
 
 
 const ExploreTemplates = () => {
-	const { templates } = useAppContext()
+	const { templates, loadAllTemplates } = useAppContext()
     const { t } = useTranslation('common');
 	const [topTemplates, setTopTemplates] = useState(null)
 
 	useEffect(() => {
 		loadTopTemplates()
 	}, [templates])
+
+    useEffect(() => {
+        loadAllTemplates()
+    }, [])
 
 	const loadTopTemplates = async () => {
 		const { data } = await fetchTopTemplates()
