@@ -6,6 +6,7 @@ import { FaTrash } from "react-icons/fa";
 import { deleteQuestionById, editQuestionById } from "@/app/actions/questions";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from 'react-markdown';
+import { socket } from "@/app/lib/socket";
 
 const Question = ({ question, index, moveQuestion, template, loadQuestions, handleAnswerChange, formResetTrigger, setAnswers }) => {
 
@@ -100,6 +101,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 		e.preventDefault();
 		await editQuestionById(question?.id, newEditContent);
 		await loadQuestions(template?.id);
+		socket.emit("question updated")
 		setIsEditing(false)
 	}
 
@@ -107,7 +109,20 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 		e.preventDefault();
 		await deleteQuestionById(question?.id);
 		await loadQuestions(template?.id)
+		socket.emit("question updated")
 	}
+
+	useEffect(() => {
+        const updateQuestions = async () => {
+            await loadQuestions(template?.id);
+        };
+        socket.on("Question Updated", updateQuestions);
+     
+        return () => {
+            socket.off("Question Updated", updateQuestions);
+        };
+    }, [template?.id]);
+
 
 	return (
 		<div ref={ref} className="flex flex-col items-start w-full p-4 gap-3 border dark:border-gray-700 rounded-md bg-gray-100 dark:bg-gray-900 cursor-pointer shadow-md hover:shadow-lg transition-shadow" >
