@@ -26,13 +26,10 @@ const Home = () => {
     }, [user, session]);
 
     const fetchSession = async () => {
-        try {
-            setIsLoading(true);
-            const sessionData = await logSession();
-            setSession(sessionData);
-        } finally {
-            setIsLoading(false);
-        }
+		setIsLoading(true)
+        const sessionData = await logSession();
+        setSession(sessionData);
+        if (sessionData) setIsLoading(false);
     }
 
   return (
