@@ -1,11 +1,12 @@
 'use client'
 import { createQuestion } from '@/app/actions/questions'
+import { socket } from '@/app/lib/socket'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import ReactMarkdown from 'react-markdown'
 
-const AddQuestion = ({ template, loadQuestions }) => {
+const AddQuestion = ({ template, loadQuestions, questions }) => {
 
     const { t } = useTranslation("common")
     const [isDisplayed, setIsDisplayed] = useState(true)
@@ -23,7 +24,19 @@ const AddQuestion = ({ template, loadQuestions }) => {
         reset();
         setValue("templateId", template?.id)
         setPreviewMarkdown("");
+        socket.emit("question updated")
     }
+
+    useEffect(() => {
+        const updateQuestions = async () => {
+            await loadQuestions(template?.id);
+        };
+        socket.on("Question Updated", updateQuestions);
+     
+        return () => {
+            socket.off("Question Updated", updateQuestions);
+        };
+    }, [template?.id]);
 
     return (
     <div className='p-2'>
