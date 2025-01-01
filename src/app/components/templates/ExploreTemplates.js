@@ -4,6 +4,7 @@ import { useAppContext } from '../context/provider'
 import TemplateThumbnail from './TemplateThumbnail';
 import { fetchTopTemplates } from '@/app/actions/templates';
 import { useTranslation } from 'react-i18next';
+import Loading from '../general/Loading';
 
 
 const ExploreTemplates = () => {
@@ -27,6 +28,7 @@ const ExploreTemplates = () => {
 	return (
         <div className="h-full min-h-full w-full md:w-[75%] flex flex-col items-center p-3">
             <p className='font-bold text-center text-lg dark:text-white'>{t("explore-templates")}</p>
+            { templates && topTemplates ? (
             <div className="border-2 border-slate-200 dark:border-gray-600 rounded shadow-lg w-full min-h-full md:h-auto p-4 bg-white dark:bg-gray-800">
                 <div className='w-full'>
                     <p className='font-bold mb-3 dark:text-white'>{t("top-five")}</p>
@@ -63,6 +65,9 @@ const ExploreTemplates = () => {
                     </div>
                 </div>
             </div>
+            ) : (
+                <Loading />
+            ) }
         </div>
 	)
 }
