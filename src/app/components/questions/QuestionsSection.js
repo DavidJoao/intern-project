@@ -8,6 +8,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 import NonAuthQuestion from "./NonAuthQuestion";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { icons } from "@/app/lib/icons";
 
 const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, session }) => {
 
@@ -19,6 +20,7 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
   const [successMessage, setSuccessMessage] = useState("")
   const [formResetTrigger, setFormResetTrigger] = useState(0);
   const [sendCopy, setSendCopy] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const emailData = {
     userEmail: user?.user?.email,
@@ -73,29 +75,36 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
   };
 
   const handleSubmitForm = async (e) => {
-    setErrorMessage("")
-    e.preventDefault();
-    if (answers?.length < questions?.length) {
-      setErrorMessage(t("must-answer"))
-    } else {
-
-      if (sendCopy === true) sendEmail();
-
-      await createForm(user?.user?.id, template?.id, answers);
-      setAnswers([])
+      e.preventDefault()
       setErrorMessage("")
+      setIsLoading(true)
+
+      if (sendCopy === true) await sendEmail();
+      const response = await createForm(user?.user?.id, template?.id, answers);
+      if (response.status === 200) {
+        setSuccessMessage(t("email-success"))
+        setTimeout(async () => {
+          setSuccessMessage("")
+        }, 3000)
+      }
+
+      setErrorMessage("")
+      setAnswers([])
+      setIsLoading(false)
       setFormResetTrigger((prev) => prev + 1);
-    }
   }
 
   const sendEmail = async () => {
     const emailResponse = await sendFormThroughEmail(emailData)
     if (emailResponse.status === 200) {
       setSuccessMessage(t("email-success"))
-      setTimeout(async () => {
-        setSuccessMessage("")
-      }, 3000)
     }
+    setTimeout(async () => {
+      setSuccessMessage("")
+    }, 3000)
+    
+    setAnswers([])
+    setFormResetTrigger((prev) => prev + 1);
   }
 
   return (
@@ -112,17 +121,17 @@ const QuestionsSection = ({ questions, setQuestions, template, loadQuestions, se
             <p className="text-center">{t("no-questions")}</p>
           )}
             <div className="flex flex-row gap-2 mx-auto">
-              <p>Send Copy To Email? {sendCopy.toString()}</p>
+              <p>{t("send-form-copy")}? {sendCopy.toString()}</p>
               <input type="checkbox" checked={sendCopy} value={sendCopy} onChange={(e) => setSendCopy(e.target.checked)}/>
             </div>
-            <button className="blue-button h-auto mx-auto" type="submit">{t("send-form")}</button>
+            <button className="blue-button h-auto mx-auto flex items-center justify-center" type="submit">{ isLoading ? icons.loading : t("send-form")}</button>
           <p className="text-red-500 font-bold mx-auto text-center">{errorMessage}</p>
           <p className="text-green-500 font-bold mx-auto text-center">{successMessage}</p>
         </form>
       </DndProvider>
     ) : (
       <div>
-        <Link className='new-theme-button' href={'/pages/login'}>Login</Link>
+        <Link className='new-theme-button' href={'/pages/login'}>{t("login")}</Link>
         <form className="flex flex-col w-full p-4 gap-4" onSubmit={handleSubmitForm}>
           {questions?.length > 0 ? (
             questions.map((question, index) => (
