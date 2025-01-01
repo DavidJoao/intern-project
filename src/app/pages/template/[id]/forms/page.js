@@ -1,9 +1,8 @@
 'use client'
-import { fetchFormsByTemplateId } from '@/app/actions/forms';
+import { fetchFormsByTemplateId, fetchFormsByUserAndTemplate } from '@/app/actions/forms';
 import Form from '@/app/components/forms/Form';
 import Loading from '@/app/components/general/Loading';
 import React, { useEffect, useState } from 'react'
-import { navigate } from '@/app/lib/redirect';
 import { useAuth } from '@/app/hooks/useAuth';
 import { getTemplateById } from '@/app/actions/templates';
 
@@ -14,44 +13,45 @@ const Forms = (context) => {
 
     const [forms, setForms] = useState(null);
     const [creatorId, setCreatorId] = useState(null)
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
-        getForms();
-        getTemplate();
-    }, [])
-
-    useEffect(() => {
-        if (user && creatorId) {
-            if (user?.user?.role !== 'admin' || creatorId !== user?.user?.id) {
-                navigate(`/pages/template/${id}`)
-            }
+        if (user?.user?.id) {
+            fetchTemplateAndForms();
         }
-    }, [user, creatorId])
+    }, [id, user?.user?.id, user?.user?.role]);
+    
+    const fetchTemplateAndForms = async () => {
+        try {
+            setLoading(true);
+            const { data: templateData } = await getTemplateById(id);
+            const templateCreatorId = templateData?.foundTemplate?.creatorId;
+            setCreatorId(templateCreatorId);
 
-    const getForms = async (e) => {
-        const { data } = await fetchFormsByTemplateId(id)
-        setForms(data?.forms)
-    }
+            if (user?.user?.role === 'admin' || templateCreatorId === user?.user?.id) {
+                const { data: formsData } = await fetchFormsByTemplateId(id);
+                setForms(formsData?.forms || []);
+            } else {
+                const { data: formsData } = await fetchFormsByUserAndTemplate(id, user?.user?.id);
+                setForms(formsData?.forms || []);
+            }
+        } catch (err) {
+            setError(err.message || 'Failed to load data');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const getTemplate = async () => {
-        const {data} = await getTemplateById(id)
-        setCreatorId(data?.foundTemplate?.creatorId)
-    }
-
+    if (isLoading) return <Loading />;
+    
     return (
-    <>
-    { forms ? (
     <div className='general-bg flex flex-col gap-5 pt-[50px] p-5 min-h-screen'>
         { forms && forms.map((form, index) => {
             return (
-                <Form key={index} form={form} getForms={getForms} />
+                <Form key={index} form={form} getForms={fetchTemplateAndForms} />
             )
         })}
     </div>
-    ) : (
-        <Loading />
-    ) }
-    </>
   )
 }
 
