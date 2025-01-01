@@ -73,13 +73,14 @@ const Template = (context) => {
 							style={{ backgroundImage: `url('${template.imageUrl}')` }}></div>
 						<div className="w-[50%] flex flex-col justify-center">
 							<h1 className="font-bold text-3xl text-white ">{template.title}</h1>
+							<p className="text-white text-sm">Posted By: {template?.creator?.name}</p>
 							<p className="text-white text-sm">{template.description}</p>
 						</div>
 
 						<div className="w-[50%] flex flex-col items-end justify-evenly gap-3">
 							<Like template={template}/>
+							<Link href={`/pages/template/${template.id}/forms`} className="new-theme-button w-[100px]">{t("forms")}<IoArrowForwardCircleOutline />{" "} </Link>
 							<RoleBasedComponent condition={(user) => user.role === 'admin' || template.creatorId === user.id} user={user?.user}>
-								<Link href={`/pages/template/${template.id}/forms`} className="new-theme-button w-[100px]">{t("forms")}<IoArrowForwardCircleOutline />{" "} </Link>
 								<Link href={`/pages/template/${template.id}/settings`} className="new-theme-button w-[100px]"> {t("settings")} <CiSettings />{" "} </Link>
 							</RoleBasedComponent>
 						</div>
