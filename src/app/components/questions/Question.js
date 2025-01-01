@@ -58,15 +58,19 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 	
 			return existingAnswers;
 		});
-	}, [question.id, question.type, question.value]);
+	}, [question.id, question.type, question.value, formResetTrigger]);
 
 	drag(drop(ref))
 
 	useEffect(() => {
-		if (question.type === "checkbox") {
-			setIsChecked(!!question.value);
+		if (formResetTrigger > 0) {
+			if (question.type === "checkbox") {
+				setIsChecked(false);
+			} else if (inputRef.current) {
+				inputRef.current.value = "";
+			}
 		}
-	}, [question.type, question.value, formResetTrigger]);
+	}, [formResetTrigger]);
 
 	useEffect(() => {
 		switch (question.type) {
@@ -126,7 +130,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 
 	return (
 		<div ref={ref} className="flex flex-col items-start w-full p-4 gap-3 border dark:border-gray-700 rounded-md bg-gray-100 dark:bg-gray-900 cursor-pointer shadow-md hover:shadow-lg transition-shadow" >
-			<div className="flex items-center justify-between w-full">
+			<div className="flex flex-col-reverse sm:flex-row items-start justify-between w-full gap-2">
 				{ isEditing ? ( <input className="input text-black" placeholder="Title" value={newEditContent.title} onChange={(e) => setNewEditContent({...newEditContent, ['title']: e.target.value})}/> ) 
 				: 
 				( <p className="font-bold text-gray-800 dark:text-gray-200">{question.title}</p> ) }
@@ -149,7 +153,7 @@ const Question = ({ question, index, moveQuestion, template, loadQuestions, hand
 			: 
 			( <ReactMarkdown className="text-gray-700 dark:text-gray-300">{question.description}</ReactMarkdown> ) }
 			{ isEditing && (
-				<div className="flex flex-row gap-3 mt-2">
+				<div className="flex gap-3 mt-2">
 					<button type="submit" className="new-theme-button" onClick={handleEdit}>{t("edit")}</button>
 					<button className="new-theme-gray-button" onClick={() => setIsEditing(!isEditing)}>{t("cancel")}</button>
 				</div>
