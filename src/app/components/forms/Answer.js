@@ -4,10 +4,14 @@ import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { FaTrash } from "react-icons/fa"
 import { MdModeEditOutline } from "react-icons/md"
+import RoleBasedComponent from "../general/RoleBasedComponent"
+import { useAuth } from "@/app/hooks/useAuth"
+
 
 const Answer = ({ answer, form, getForms }) => {
 
     const { t } = useTranslation("common")
+    const user = useAuth();
 
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState(answer?.value)
@@ -31,12 +35,13 @@ const Answer = ({ answer, form, getForms }) => {
 			<div className="p-2 flex flex-row items-center justify-between">
                 <label className="font-bold">{answer?.question?.title}</label>
 				<div className="flex flex-row gap-2">
-                    {/* ROLE BASED COMPONENT */}
 					<button className="text-blue-500" onClick={() => {
                         setIsEditing(!isEditing)
                         setEditValue(answer?.value)
                         }}> <MdModeEditOutline /> </button>
-                    <button className="new-theme-red-button" onClick={handleDelete}><FaTrash /></button>
+                    <RoleBasedComponent condition={(user) => user?.role === 'admin'} user={user?.user}>
+                        <button className="new-theme-red-button" onClick={handleDelete}><FaTrash /></button>
+                    </RoleBasedComponent>    
 				</div>
 			</div>
 			<label>{t("question")}: {answer?.question?.description}</label>
@@ -44,12 +49,12 @@ const Answer = ({ answer, form, getForms }) => {
             { isEditing ? (
                 <>
                 { answer.value === true || answer.value === false ? (
-                    <select value={editValue} className="input" onChange={(e) => setEditValue(e.target.value)}>
+                    <select value={editValue} className="input dark:text-black" onChange={(e) => setEditValue(e.target.value)}>
                         <option>true</option>
                         <option>false</option>
                     </select>
                 ) : (
-                    <input value={editValue} className="input"  onChange={(e) => setEditValue(e.target.value)}/>
+                    <input value={editValue} className="input dark:text-black"  onChange={(e) => setEditValue(e.target.value)}/>
                 )
                 }
                 <button className="blue-button w-auto" onClick={handleEdit}>{t("edit")}</button>
