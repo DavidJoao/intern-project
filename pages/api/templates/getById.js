@@ -3,7 +3,7 @@ import { db } from "@/app/lib/prismaClient"
 export default async function GET(req, res){
     const { templateId } = req.query;
     try {
-        const foundTemplate = await db.template.findUnique({ where: { id: templateId } })
+        const foundTemplate = await db.template.findUnique({ where: { id: templateId }, include: { creator: { select: { name: true } } } })
         res.status(200).json({ foundTemplate: foundTemplate })
         return foundTemplate
     } catch (error) {
