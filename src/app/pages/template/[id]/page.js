@@ -75,6 +75,7 @@ const Template = (context) => {
 							<h1 className="font-bold text-3xl text-white ">{template.title}</h1>
 							<p className="text-white text-sm">Posted By: {template?.creator?.name}</p>
 							<p className="text-white text-sm">{template.description}</p>
+							<p>{template?.tags.map((tag) => { return ( `#${tag} ` ) })}</p>
 						</div>
 
 						<div className="w-[50%] flex flex-col items-end justify-evenly gap-3">
