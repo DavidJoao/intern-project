@@ -19,7 +19,6 @@ const Login = () => {
     const [session, setSession] = useState(null)
     const [errorMessage, setErrorMessage] = useState("")
     const [isLoading, setIsLoading] = useState(false)
-    const [successMessage, setSuccessMessage] = useState("")
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -27,20 +26,19 @@ const Login = () => {
         setErrorMessage("");
         setIsLoading(true)
         try {
-            const userStatus = await fetchUserStatusByEmail(data.email)
-            if (userStatus === 'blocked') {
-              setErrorMessage("Account Blocked")
+            const userStatus = await fetchUserStatusByEmail(data?.email)
+            if (userStatus.status === 400 || userStatus.status === 404) {
+              setErrorMessage(userStatus.response?.data?.error || "An error occurred");
+              setIsLoading(false);
+              return;
             } else {
-              const response = await signInUser(data.email, data.password);
+              const response = await signInUser(data?.email, data?.password);
               if (response.error === null) {
-                  navigate('/pages/home');
+                navigate('/pages/home');
               } else if (response.error === 'CredentialsSignin') {
-                setErrorMessage("Invalid Credentials")
+                setErrorMessage("Invalid Credentials");
               }
-              setIsLoading(false)
-              router.refresh();
-              return response
-            }
+            }   
         } catch (error) {
             return error
         }
