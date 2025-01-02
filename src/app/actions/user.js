@@ -35,7 +35,7 @@ export const fetchAllUsers = async () => {
 export const fetchUserStatusByEmail = async (email) => {
     try {
         const response = await axios.get(`/api/user/${email}`)
-        return response.data.user.status;
+        return response;
     } catch (error) {
         return error
     }
