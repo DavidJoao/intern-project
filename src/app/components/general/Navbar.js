@@ -4,7 +4,8 @@ import { logoutUser } from '@/app/actions/session'
 import Link from 'next/link'
 import { useTranslation } from "react-i18next";
 import { useAppContext } from '../context/provider';
-import { CiLogout, CiUser, CiSettings, CiLight, CiSun, CiMenuBurger } from "react-icons/ci";
+import { CiLogout, CiUser, CiSettings, CiLight, CiMenuBurger } from "react-icons/ci";
+import { FiSun } from "react-icons/fi";
 import { MdOutlineDashboard, MdLanguage } from "react-icons/md";
 import { GoMoon } from "react-icons/go";
 import { icons } from '@/app/lib/icons';
@@ -108,7 +109,7 @@ const Navbar = ({ session }) => {
                         </select>
                     </div>
                     { theme === 'dark' ? (
-                        <button className="" onClick={() => toggleTheme()}><CiSun /></button>
+                        <button className="" onClick={() => toggleTheme()}><FiSun /></button>
                     ) : (
                         <button className="" onClick={() => toggleTheme()}><GoMoon /></button>
                     ) }
