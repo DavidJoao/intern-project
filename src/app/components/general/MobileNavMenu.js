@@ -50,10 +50,6 @@ const MobileNavMenu = ({ setIsOpen, isOpen, session}) => {
         <>
         { session ? (
             <div className={`pt-[50px] p-3 ${ isOpen === true ? 'fixed' : 'hidden' } md:hidden flex-col gap-2 items-center justify-center bg-white dark:bg-gray-800 z-[200] top-10 w-full`}>
-                <button className="nav-button border-b w-full p-2" onClick={() => {
-                    logoutUser()
-                    setIsOpen(false)
-                    }}> <CiLogout />{t("logout")}</button>
                 <Link className="nav-button border-b w-full p-2" href={"/pages/profile"} onClick={() => setIsOpen(false)}> <CiUser /> {t("profile")} </Link>
                 <Link className="nav-button border-b w-full p-2" href={"/pages/home"} onClick={() => setIsOpen(false)}> <MdOutlineDashboard /> {t("dashboard")}</Link>
                 <Link className="nav-button border-b w-full p-2" href={"/pages/settings"} onClick={() => setIsOpen(false)}> <CiSettings /> {t("settings")} </Link>
@@ -66,14 +62,18 @@ const MobileNavMenu = ({ setIsOpen, isOpen, session}) => {
                     </select>
                 </div>
                 {theme === "dark" ? (
-                    <button className="" onClick={() => toggleTheme()}>
+                    <button className="nav-button border-b w-full p-4" onClick={() => toggleTheme()}>
                         <CiLight />
                     </button>
                 ) : (
-                    <button className="" onClick={() => toggleTheme()}>
+                    <button className="nav-button border-b w-full p-4" onClick={() => toggleTheme()}>
                         <GoMoon />
                     </button>
                 )}
+                <button className="nav-button border-b w-full p-2" onClick={() => {
+                    logoutUser()
+                    setIsOpen(false)
+                    }}> <CiLogout />{t("logout")}</button>
                 <form className="h-auto w-auto flex flex-row items-center justify-center gap-2 p-5 mx-auto">
                     <input className="input w-full dark:bg-gray-700 dark:text-white dark:border-gray-600" placeholder={t("search-template")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
                     <button className="dark:text-gray-400" onClick={() => setIsOpen(false)}>{icons.search}</button>
