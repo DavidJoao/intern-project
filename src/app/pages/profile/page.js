@@ -48,7 +48,7 @@ const Profile = () => {
       };
 
 	return (
-    <div className='pt-[50px] pl-5 pr-5 w-screen h-screen dark:bg-gray-700'> {user && templates ? 
+    <div className='pt-[50px] p-5 w-screen min-h-screen h-auto dark:bg-gray-700'> {user && templates ? 
       <>
       <h1 className='text-2xl m-2 dark:text-white'>My Templates</h1>
       <DndProvider backend={HTML5Backend}>
