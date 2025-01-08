@@ -63,16 +63,16 @@ const Login = () => {
     return (
         <div className='w-screen h-screen center-col basic-theme'>
             <div className='w-full md:w-auto h-auto center-col p-3 gap-3'>
-                <h1 className='font-bold text-3xl'>{t('login')}</h1>
-                <form className='border-[1px] border-primary dark:border-none rounded w-full md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3' onSubmit={handleSubmit(onSubmit)}>
+                <h1 className='text-3xl'>{t('login')}</h1>
+                <form className='dark:border-none rounded w-full md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3 bg-slate-200 shadow-lg' onSubmit={handleSubmit(onSubmit)}>
                     <label>Email</label>
                     <input required className='input w-[70%] lowercase' {...register("email", { required: true })}/>
                     <label>{t('password')}</label>
                     <input required className='input w-[70%]' type='password'  {...register("password", { required: true })}/>
-                    <button type='submit' className='theme-button w-[70%] flex items-center justify-center'>{ isLoading ? icons.loading : t("login")}</button>
+                    <button type='submit' className='new-theme-button w-[70%] flex items-center justify-center'>{ isLoading ? icons.loading : t("login")}</button>
                     <p className='error-message'>{errorMessage}</p>
                 </form>
-                <Link className='hover:underline underline-offset-2' href={'/pages/signup'}>{t('no-account')}</Link>
+                <Link className='underline underline-offset-6' href={'/pages/signup'}>{t('no-account')}</Link>
             </div>
         </div>
     )

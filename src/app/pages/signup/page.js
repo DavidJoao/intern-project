@@ -76,8 +76,8 @@ const Signup = () => {
 	return (
 		<div className="w-screen h-screen center-col basic-theme">
 			<div className="w-full h-auto center-col p-3 gap-3">
-				<h1 className="font-bold text-3xl">{t("signup")}</h1>
-				<form className="border-[1px] border-primary dark:border-none rounded w-full md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+				<h1 className="text-3xl">{t("signup")}</h1>
+				<form className="bg-slate-200 dark:border-none rounded w-full md:w-[400px] lg:w-[500px] p-3 white-theme center-col gap-3 shadow-lg" onSubmit={handleSubmit(onSubmit)}>
 					<label>Email</label>
 					<input required className="input w-[70%] lowercase" {...register("email", { required: true })}/>
 					<label>{t("name")}</label>
@@ -90,7 +90,7 @@ const Signup = () => {
                     <p className="error-message">{errorMessage}</p>
                     <p className="success-message text-center">{successMessage}</p>
 				</form>
-                <Link className='hover:underline underline-offset-2' href={'/pages/login'}>{t("have-account")}!</Link>
+                <Link className='underline underline-offset-6' href={'/pages/login'}>{t("have-account")}!</Link>
 			</div>
 		</div>
 	)
