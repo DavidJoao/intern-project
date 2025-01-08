@@ -4,14 +4,18 @@ import { addAllowedUserAPI, deleteTemplateById, getMatchingEmailsAPI, getTemplat
 import Loading from '@/app/components/general/Loading'
 import { fetchTopics } from '@/app/actions/templates'
 import { useAppContext } from '@/app/components/context/provider'
-import RoleBasedComponent from '@/app/components/general/RoleBasedComponent'
 import { useAuth } from '@/app/hooks/useAuth'
 import Link from 'next/link'
 import { navigate } from '@/app/lib/redirect'
 import { useTranslation } from 'react-i18next'
 import { FaTrash } from 'react-icons/fa'
+import dynamic from 'next/dynamic';
 
 const TemplateSettings = (context) => {
+
+    const RoleBasedComponent = dynamic(() => import("@/app/components/general/RoleBasedComponent"), {
+        loading: () => <Loading />
+    })
 
     const { id } = context.params
     const { t } = useTranslation("common")
@@ -117,7 +121,6 @@ const TemplateSettings = (context) => {
 
     return (
     <>
-    {template ? (
         <RoleBasedComponent condition={(user) => user?.role === 'admin' || user?.id === template.creatorId} user={user?.user}>
         <div className="general-bg min-h-screen flex flex-col pt-[50px]">
             <form className='p-2 flex flex-col gap-2 items-center' onSubmit={handleSubmit}>
@@ -168,16 +171,13 @@ const TemplateSettings = (context) => {
                     </div>
                     </>
                 ) }
-                <button type='submit' className='new-theme-button'>{t("submit-changes")}</button>
-                <button className='p-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600' onClick={deleteTemplate}>{t("delete")}</button>
-                <Link href={`/pages/template/${id}`} className='new-theme-gray-button'>{t("goto-template")}</Link>
+                <button type='submit' className='new-theme-button w-[150px]'>{t("submit-changes")}</button>
+                <button className='new-theme-red-button w-[150px]' onClick={deleteTemplate}>{t("delete")}</button>
+                <Link href={`/pages/template/${id}`} className='new-theme-gray-button w-[150px] text-center'>{t("goto-template")}</Link>
                 <p className='font-bold text-green-600'>{successMessage}</p>
             </form>
         </div>
         </RoleBasedComponent>
-    ) : (
-        <Loading />
-    )}
     </>
     
   )
