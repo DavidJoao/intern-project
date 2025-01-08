@@ -117,12 +117,7 @@ const Navbar = ({ session }) => {
             )}
             </div>
             <div className='flex items-center justify-center md:hidden w-full fixed top-0 z-[101] bg-white dark:bg-gray-900'>
-                <button className='theme-button w-full' onClick={() => setIsOpen(!isOpen)}><CiMenuBurger className='mx-auto'/></button>
-                { theme === 'dark' ? (
-                        <button className="theme-button text-center" onClick={() => toggleTheme()}><CiLight className='mx-auto'/></button>
-                    ) : (
-                        <button className="theme-button text-center" onClick={() => toggleTheme()}><GoMoon className='mx-auto'/></button>
-                    ) }
+                <button className='new-nav-button' onClick={() => setIsOpen(!isOpen)}><CiMenuBurger className='mx-auto'/></button>
             </div>
             <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} session={session}/>
         </>
