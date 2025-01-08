@@ -24,7 +24,7 @@ const TemplateThumbnail = ({ template, index }) => {
     <Tooltip text={template.description}>
         <div>
         <div className='flex justify-center items-center mb-2'>
-        <Image className="rounded-md object-cover" alt='template' src={template.imageUrl} width={100} height={100} />
+        <Image className="rounded-md object-cover w-auto h-auto" alt='template' src={template.imageUrl} width={100} height={100} />
         </div>
             <p className="text-xs font-bold text-center dark:text-white text-black">{template.title}</p>
             <p className="text-xs font-bold text-center dark:text-white text-black"> by {template?.creator?.name}</p>
