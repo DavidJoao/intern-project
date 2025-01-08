@@ -1,15 +1,21 @@
 'use client'
 import { logSession } from '@/app/actions/session'
 import Loading from '@/app/components/general/Loading'
-import CreateTemplate from '@/app/components/templates/CreateTemplate'
-import ExploreTemplates from '@/app/components/templates/ExploreTemplates'
 import { useAuth } from '@/app/hooks/useAuth'
-import { navigate } from '@/app/lib/redirect'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import dynamic from 'next/dynamic';
 
 const Home = () => {
+
+	const CreateTemplate = dynamic(() => import('@/app/components/templates/CreateTemplate'), {
+		loading: () => <Loading />
+	  });
+
+	const ExploreTemplates = dynamic(() => import('@/app/components/templates/ExploreTemplates'), {
+		loading: () => <Loading />
+	});
 
 	const [session, setSession] = useState(null)
 	const [isLoading, setIsLoading] = useState(true);
