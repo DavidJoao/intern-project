@@ -48,20 +48,23 @@ const Profile = () => {
       };
 
 	return (
-    <> {user && templates ? 
-    <DndProvider backend={HTML5Backend}>
-    <div className='border-[1px] border-black pt-[50px] w-screen h-auto min-h-screen dark:bg-gray-700'>
-        <div className='p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 w-full'>
-        { templates?.map((template, index) => {
-            return (
-                <DraggableTemplate key={index} template={template} index={index} moveTemplate={moveTemplate}/>
-            )
-        }) }
-        </div>
-    </div> 
-    </DndProvider>
+    <div className='pt-[50px] pl-5 pr-5 w-screen h-screen dark:bg-gray-700'> {user && templates ? 
+      <>
+      <h1 className='text-2xl m-2 dark:text-white'>My Templates</h1>
+      <DndProvider backend={HTML5Backend}>
+      <div className='w-full h-auto p-4 rounded bg-slate-100 dark:bg-gray-600 shadow-lg border dark:border-none'>
+          <div className='p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 w-full'>
+          { templates?.map((template, index) => {
+              return (
+                  <DraggableTemplate key={index} template={template} index={index} moveTemplate={moveTemplate}/>
+              )
+          }) }
+          </div>
+      </div> 
+      </DndProvider>
+      </>
     : <Loading />}
-    </>)
+    </div>)
 }
 
 export default Profile
