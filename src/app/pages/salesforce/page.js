@@ -25,16 +25,15 @@ const Salesforce = () => {
     }, [user])
     
     useEffect(() => {
-        const checkExistance = async () => {
-            const { data } = await checkForRegisteredUser(user?.user?.email)
-            console.log(data)
-            setFoundContact(data)
-
-        }
         if (user != null) {
             checkExistance()
         }
     }, [user])
+
+    const checkExistance = async () => {
+        const { data } = await checkForRegisteredUser(user?.user?.email)
+        setFoundContact(data)
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,9 +46,9 @@ const Salesforce = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true)
-        const response = await authenticateWithSalesforceAPI(form)
-        console.log(response)
+        await authenticateWithSalesforceAPI(form)
         setIsLoading(false)
+        checkExistance()
     }
 
     
