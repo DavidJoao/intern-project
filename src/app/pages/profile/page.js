@@ -6,6 +6,7 @@ import { getTemplatesByUserId, updateTemplatesOrderAPI } from '@/app/actions/tem
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DraggableTemplate from '@/app/components/templates/DraggableTemplate';
+import Link from 'next/link';
 
 const Profile = () => {
 
@@ -51,6 +52,7 @@ const Profile = () => {
     <div className='pt-[50px] p-5 w-screen min-h-screen h-auto dark:bg-gray-700'> {user && templates ? 
       <>
       <h1 className='text-2xl m-2 dark:text-white'>My Templates</h1>
+      <Link href={'/pages/salesforce'} className='new-theme-button m-1 font-bold'>Connect Account With Salesforce</Link>
       <DndProvider backend={HTML5Backend}>
       <div className='w-full h-auto p-4 rounded bg-slate-100 dark:bg-gray-600 shadow-lg border dark:border-none'>
           <div className='p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-2 w-full'>
