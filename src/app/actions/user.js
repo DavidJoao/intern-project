@@ -67,3 +67,21 @@ export const deleteUser = async (userId) => {
         return error;
     }
 }
+
+export const authenticateWithSalesforceAPI = async (data) => {
+    try {
+        const response = await axios.post(`/api/salesforce/create`, JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } })
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const checkForRegisteredUser = async (email) => {
+    try {
+        const response = await axios.post(`/api/salesforce/registeredContact?email=${email}`)
+        return response
+    } catch (error) {
+        return error
+    }
+}
