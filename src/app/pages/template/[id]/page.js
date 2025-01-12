@@ -13,15 +13,14 @@ import { CiSettings } from 'react-icons/ci';
 import { logSession } from '@/app/actions/session';
 import { navigate } from '@/app/lib/redirect';
 import { useTranslation } from 'react-i18next';
+import RoleBasedComponent from '@/app/components/general/RoleBasedComponent';
+import Comment from '@/app/components/comments/Comment';
 import dynamic from 'next/dynamic';
 
 const Template = context => {
 
 	const CreateComment = dynamic(() => import("@/app/components/comments/CreateComment"))
 	const AddQuestion = dynamic(() => import("@/app/components/questions/AddQuestion"))
-	const Comment = dynamic(() => import("@/app/components/comments/Comment"))
-	const RoleBasedComponent = dynamic(() => import("@/app/components/general/RoleBasedComponent"), {
-		loading: () => <Loading />})
 
 	const user = useAuth()
 	const { t } = useTranslation("common")
