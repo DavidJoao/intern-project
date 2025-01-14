@@ -17,11 +17,22 @@ model User {
   role      Role     @default(user)
   status    Status   @default(active)
 
-  templates Template[]
-  forms     Form[]
-  comments  Comment[]
-  likes     Like[]
-  answers   Answer[]
+  apiToken    ApiToken?
+  apiTokenId  String? 
+  templates   Template[]
+  forms       Form[]
+  comments    Comment[]
+  likes       Like[]
+  answers     Answer[]
+}
+
+model ApiToken {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
 }
 
 enum Role {
