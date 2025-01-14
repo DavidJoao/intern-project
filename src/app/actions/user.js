@@ -85,3 +85,39 @@ export const checkForRegisteredUser = async (email) => {
         return error
     }
 }
+
+export const generateApiToken = async (userId) => {
+    try {
+        const response = await axios.post(`/api/token/generate?userId=${userId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
+
+export const retreiveApiToken = async (userId) => {
+    try {
+        const response = await axios.get(`/api/token/retrieve?userId=${userId}`)
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const resetApiToken = async (apiToken) => {
+    try {
+        const response = await axios.patch(`/api/token/reset?apiToken=${apiToken}`)
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const deleteApiToken = async (userId) => {
+    try {
+        const response = await axios.delete(`/api/token/delete?userId=${userId}`)
+        return response;
+    } catch (error) {
+        return error
+    }
+}
