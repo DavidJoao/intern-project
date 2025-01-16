@@ -24,7 +24,7 @@ const Profile = () => {
 	}, [user])
 
     const retreiveToken = async () => {
-        const response = await retreiveApiToken(user?.user?.id)
+        const response = await retreiveApiToken()
         if (response?.status === 404) {
             setUserToken(null)
         } else {
@@ -88,11 +88,11 @@ const Profile = () => {
 
 	return (
     <div className='w-screen min-h-screen h-auto flex flex-col pt-[50px] p-5 dark:bg-gray-700'>
-      <div className='p-3 flex flex-col'>
+      <div className='p-3 flex flex-col border-b'>
         <Link href={'/pages/salesforce'} className='new-theme-button m-1 w-full sm:w-[300px]'>Connect Account With Salesforce</Link>
       </div>
 
-      <div className='p-3 flex flex-col gap-2 '>
+      <div className='p-3 flex flex-col gap-2 border-b'>
         { userToken !== null ? (
             <>
             <p className='break-words new-theme-gray-button w-full sm:w-[300px]'>Token: {userToken?.token}</p>

@@ -16,7 +16,7 @@ export default async function GET(req, res){
             return { valid: false, status: 401, message: "Invalid or expired token." };
         }
     
-        return { valid: true, status: 200, userToken: apiToken.token, token: authorizationHeader.split(" ")[1] };
+        return { valid: true, status: 200, userToken: apiToken.token, token: authorizationHeader.split(" ")[1], userId: apiToken.userId };
     }
     
     const validation = await validateToken()
@@ -24,7 +24,7 @@ export default async function GET(req, res){
         res.status(401).json(validation)
     }
     
-    const { userId } = req.query;
+    const userId = validation.userId
 
     if (!userId) return res.status(401).json({ error: 'User ID Required' });
     if (validation.userToken !== validation.token) return res.status(401).json({ error: 'Invalid Token' })

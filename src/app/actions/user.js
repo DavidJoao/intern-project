@@ -95,9 +95,9 @@ export const generateApiToken = async (userId) => {
     }
 }
 
-export const retreiveApiToken = async (userId) => {
+export const retreiveApiToken = async () => {
     try {
-        const response = await axios.get(`/api/token/retrieve?userId=${userId}`)
+        const response = await axios.get(`/api/token/retrieve`)
         return response
     } catch (error) {
         return error
