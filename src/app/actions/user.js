@@ -95,9 +95,9 @@ export const generateApiToken = async (userId) => {
     }
 }
 
-export const retreiveApiToken = async () => {
+export const retreiveApiToken = async (userId) => {
     try {
-        const response = await axios.get(`/api/token/retrieve`)
+        const response = await axios.get(`/api/token/retrieve?userId=${userId}`)
         return response
     } catch (error) {
         return error
@@ -118,6 +118,7 @@ export const deleteApiToken = async (userId) => {
         const response = await axios.delete(`/api/token/delete?userId=${userId}`)
         return response;
     } catch (error) {
+        console.log(error)
         return error
     }
 }

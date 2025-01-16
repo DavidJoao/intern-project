@@ -24,7 +24,7 @@ const Profile = () => {
 	}, [user])
 
     const retreiveToken = async () => {
-        const response = await retreiveApiToken()
+        const response = await retreiveApiToken(user?.user?.id)
         if (response?.status === 404) {
             setUserToken(null)
         } else {
